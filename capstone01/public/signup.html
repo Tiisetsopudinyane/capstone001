@@ -16,80 +16,89 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body class="signup" x-data="Attendance">
-    <div class="wrapper">
-      <form action="">
-        <h2>Sign-up</h2>
-        <div class="input-box">
-          <i class="bx bx-user"></i>
-          <input
-            x-model="firstName"
-            type="text"
-            placeholder="First name"
-            required
-          />
-        </div>
-        <div class="input-box">
-          <i class='bx bxs-user'></i>
-          <input x-model="surname" type="text" placeholder="Surname" required />
-        </div>
-        <div class="input-box">
-          <i class="bx bx-envelope"></i>
-          <input
-            x-model="email"
-            type="email"
-            placeholder="Email address"
-            required
-            @input="validateEmail"
-          />
-        </div>
-        <div class="input-box">
-          <i class="bx bx-phone"></i> 
-          <input
-            x-model="phoneNumber" 
-            type="tel" 
-            placeholder="Phone Number"
-            required
-          />
-        </div>
-        <div class="input-box">
-          <i class='bx bxs-face'></i>
-          <input
-            x-model="username"
-            type="text"
-            placeholder="Username"
-            required
-          />
-        </div>
-        <div class="input-box">
-          <select x-model="userType" id="userType" required>
-            <option value="" disabled>Select User Type</option>
-            <option value="attendee">Attendee</option>
-            <option value="admin">Admin</option>
-          </select>
-        </div>
-        <div class="input-box">
-          <i class="bx bx-lock"></i>
-          <input
-            x-model="password"
-            type="password"
-            placeholder="Password"
-            required
-          />
-        </div>
-        <div class="input-box">
-          <i class="bx bxs-lock"></i>
-          <input
-            x-model="confirmPassword"
-            type="password"
-            placeholder="Confirm password"
-            required
-          />
-        </div>
-        <!-- <div class="remember">
-          <label><input type="checkbox" x-model="rememberMe"/>Remember me</label>
-        </div> -->
-        <button type="submit" class="btn" @click="signup(event)" :disabled="!allFieldsFilled()">Submit</button>
-      </form>
+    
+    <div class="aside">
+      <div class="wrapper canvas">
+       <div class="inner"></div>
+        <p>Press and hold a scan button for 3 seconds</p>
+        <button type="submit" class="btn" @click="signup(event)" :disabled="!allFieldsFilled()">Scan</button>
+      </div>
+      <div class="wrapper">
+        <form action="">
+          <h2>Sign-up</h2>
+          <div class="input-box">
+            <i class="bx bx-user"></i>
+            <input
+              x-model="firstName"
+              type="text"
+              placeholder="First name"
+              required
+            />
+          </div>
+          <div class="input-box">
+            <i class='bx bxs-user'></i>
+            <input x-model="surname" type="text" placeholder="Surname" required />
+          </div>
+          <div class="input-box">
+            <i class="bx bx-envelope"></i>
+            <input
+              x-model="email"
+              type="email"
+              placeholder="Email address"
+              required
+              @input="validateEmail"
+            />
+          </div>
+          <div class="input-box">
+            <i class="bx bx-phone"></i> 
+            <input
+              x-model="phoneNumber" 
+              type="tel" 
+              placeholder="Phone Number"
+              required
+            />
+          </div>
+          <div class="input-box">
+            <i class='bx bxs-face'></i>
+            <input
+              x-model="username"
+              type="text"
+              placeholder="Username"
+              required
+            />
+          </div>
+          <div class="input-box">
+            <select x-model="userType" id="userType" required>
+              <option value="" disabled>Select User Type</option>
+              <option value="attendee">Attendee</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="input-box">
+            <i class="bx bx-lock"></i>
+            <input
+              x-model="password"
+              type="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <div class="input-box">
+            <i class="bx bxs-lock"></i>
+            <input
+              x-model="confirmPassword"
+              type="password"
+              placeholder="Confirm password"
+              required
+            />
+          </div>
+          <!-- <div class="remember">
+            <label><input type="checkbox" x-model="rememberMe"/>Remember me</label>
+          </div> -->
+          <button type="submit" class="btn" @click="signup(event)" :disabled="!allFieldsFilled()">Submit</button>
+        </form>
+      </div>
+      
     </div>
   </body>
 </html>
