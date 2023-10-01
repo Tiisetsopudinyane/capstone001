@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import {selectUser,insertUser,selectByusernameFromUser,insertAdmin,insertAttendee,
-  selectByUsernameAndPasswordFromUser,selectAtendees,selectAllByRegisterNameFromRegister,selectIdByUserNameFromAttendee,
+import {selectUser,insertUser,selectByusernameFromUser,selectAllFromUserAndAttendanceById,insertAdmin,insertAttendee,
+  selectByUsernameAndPasswordFromUser,selectByUsernameFromUser,selectByUsePasswordFromUser ,selectAtendees,selectAllByRegisterNameFromRegister,selectIdByUserNameFromAttendee,
   selectMaximumRegistrationId,insertIntoRegister,selectByAdminNameFromRegister,selectByRegisterIdFromRegister,
   deleteByRegisterIdFromRegister,selectByRegisterFromRegister,selectByattendeeIdFromUser,
-  selectByattendeeNameFromUser,selectByAttendanceIdFromRegister,selectByUsernameFromAttendee,insertIntoAttendance} from './sql.queries.js'
+  selectByattendeeNameFromUser,selectByUsernameFromRegister,selectByAttendanceIdFromRegister,selectByUsernameFromAttendee,insertIntoAttendance,selectDateFromAttendee} from './sql.queries.js'
 import {dateGenerater,timeGenerater} from './dateTimeGenerator.js'
 
 
@@ -76,23 +76,26 @@ app.post("/api/addUser/", async (req,res)=>{
 app.post("/api/login/", async (req,res)=>{
     const username = req.body.username;
     const password = req.body.password;
-    const output=await selectByUsernameAndPasswordFromUser(username,password)
-    if (output.username && output.password)
+    const outputName=await selectByUsernameFromUser(username)
+    const outputPass=await selectByUsePasswordFromUser(password)
+    const output =await selectByUsernameAndPasswordFromUser(username,password)
+    if (outputName && outputPass)
     {
         res.json({
             success : "Login successful!",
             userType:output.userType,
             firstName:output.firstName,
-            surname:output.surname
+            surname:output.surname,
+            username:output.username
         })
     }
-    else if(!output.username)
+    else if(!outputName)
     {
         res.json({
             error : "User does not exist!"
         })
     }
-    else if(!output.password)
+    else if(!outputPass)
     {
         res.json({
             error : "Incorrect password!"
@@ -238,7 +241,7 @@ app.post("/api/getRegisters/", async (req, res) => {
       registerName=register[i].registerName
       attendeeId=register[i].attendanceId
       let result= await selectByattendeeIdFromUser(attendeeId)
-
+      
       //continue if registered on register but not attended else collect the data of attendees
       if(result[0]===undefined)
       {
@@ -311,30 +314,36 @@ app.post("/api/getRegisters/", async (req, res) => {
 app.post("/api/addAttendance/", async (req, res) => {
     //const attendanceId = req.body.attendanceId;
     const username=req.body.username;
-
+    
     //generate currrnt time and date
     const checkInDate=dateGenerater()
     const checkInTime=timeGenerater()
+    const results=await selectDateFromAttendee(username,checkInDate)
     // Check if both username and attendeeId exist
     const usernameRow = await selectByUsernameFromAttendee(username)
-    if (!usernameRow.username) 
+    //const list=await selectAllFromUserAndAttendanceById(usernameRow.attendeeId)
+    const attendeeId=await selectByUsernameFromRegister(username);
+    if (!usernameRow) 
     {
       res.json({
         error: "Invalid username. The username does not exist.",
       });
     }
-    else
+    else 
     {
-      
+      //if the user hasnt submited attendance yet else return message
+      if(!results){
       await insertIntoAttendance(usernameRow.username,usernameRow.userId, usernameRow.attendeeId, checkInTime,checkInDate);
-      //await insertIntoAttendee(usernameRow.username,usernameRow.userId, usernameRow.attendeeId, timeGenerater(),dateGenerater());
       res.json({
         success: true,
         message: "Attendance added successfully.",
       });
+      }
+    else{
+          res.json({
+          allertMessage:`you have taken your attendance at ${results.checkInTime}`
+        })
     }
+    }
+    
 });
-//const usernameRow=await selectByUsernameFromAttendee('lerato')
-//console.log(await insertIntoAttendance(usernameRow.username,usernameRow.userId, usernameRow.attendeeId, timeGenerater(),dateGenerater()))
-//console.log(usernameRow.username+" "+dateGenerater()+ " "+!usernameRow.username)
-  

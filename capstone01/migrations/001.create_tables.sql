@@ -1,5 +1,5 @@
 -- Create the user table
-CREATE TABLE user (
+CREATE TABLE if not exists user (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     firstName TEXT NOT NULL,
     surname TEXT NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE user (
 );
 
 -- Create the attendee table linked to the user table
-CREATE TABLE attendee (
+CREATE TABLE if not exists attendee (
     attendeeId INTEGER PRIMARY KEY AUTOINCREMENT,
     userId INTEGER NOT NULL UNIQUE,
     username TEXT NOT NULL UNIQUE,
@@ -20,7 +20,7 @@ CREATE TABLE attendee (
 
 -- Create the register table
 -- Allows admin to create a register an assign attendees to it.
-CREATE TABLE IF NOT EXISTS register (
+CREATE TABLE register (
     registerId INTEGER NOT NULL,
     attendanceId INTEGER NOT NULL,
     registerName VARCHAR(255) NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS register (
 
 
 -- Create the admin table linked to the user table
-CREATE TABLE admin (
+CREATE TABLE if not exists admin (
     adminId INTEGER PRIMARY KEY AUTOINCREMENT,
     userId INTEGER NOT NULL UNIQUE,
     username TEXT NOT NULL UNIQUE,
@@ -42,7 +42,7 @@ CREATE TABLE admin (
 );
 
 -- Create the attendance table
-CREATE TABLE attendance (
+CREATE TABLE if not exists attendance(
     attendanceId INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL,
     userId INTEGER NOT NULL,

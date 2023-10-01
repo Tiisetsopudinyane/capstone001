@@ -17,6 +17,7 @@
   </head>
   <body class="createRegister" x-data="Attendance">
     <div class="wrapper">
+      <h6 x-text="`Welcome! ${displayName}`"><h6>
       <form action="">
         <h2>Create Register</h2>
         <div class="input-box">
@@ -49,7 +50,7 @@
           </template>
         </div>
 
-        <button type="submit" class="btn" @click="submitRegister(event)">
+        <button id="button" disabled="disabled" type="submit" class="btn" @click="submitRegister(event)">
           Create
         </button>
       </form>

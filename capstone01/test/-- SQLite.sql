@@ -11,7 +11,11 @@ select username,email,phoneNumber from user where username ="malva" and email="m
 select id from user where username="malva";
 
 --sect all from user
-select * from user where username = "user" and password=1234
+select * from user where username = "malva" and password=1234
+
+select * from user;
+
+SELECT * FROM user join attendance on attendance.userId=user.id WHERE attendeeId =20 ORDER BY attendanceId DESC;
 
 --select all attendance
 SELECT * FROM attendee ORDER BY attendeeId DESC;
@@ -23,4 +27,17 @@ SELECT attendeeId from attendee where username="sammy"
 SELECT DISTINCT registerId, registerName FROM register WHERE adminName ="user" ORDER BY registerId DESC;
 
 
-SELECT attendanceId,firstname,surname,email,phoneNumber,checkInTime,checkInDate FROM user join attendance on attendance.userId=user.id WHERE attendeeId =20 ORDER BY attendanceId DESC;
+SELECT attendanceId,firstName,surname,username,email,phoneNumber,checkInTime,checkInDate FROM user join attendance on attendance.userId=user.id WHERE attendeeId =20 ORDER BY attendanceId DESC;
+
+
+
+select * from register where attendee="lerato";
+
+
+
+
+
+
+
+
+
