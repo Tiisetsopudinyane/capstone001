@@ -263,28 +263,36 @@ document.addEventListener('alpine:init', () => {
 				event.preventDefault();
 				 
 				 const username=localStorage.getItem('username')
-				 if(username===this.manualAttendanceUsername || saveUserType!="admin"){
+				 if(username===this.manualAttendanceUsername){
+					console.log("type " +this.savedUserType)
+				     if(this.savedUserType!="admin"){
 					axios
-				  .post("/api/addAttendance/", {
-					//attendanceId: this.attendanceList[0].attendanceId,
-					username: this.manualAttendanceUsername,
-				  })
-				  .then((result) => {
-						if (result.data.success) {
-					  alert(result.data.message);
-					  this.id=localStorage.getItem('registerId')
-					  this.manualAttendanceUsername='';
-					  //this.viewRegister(result.data.registerId);
-					  this.attendanceList=localStorage.setItem('yourList',result.data.yourList)
-					  window.location.href = './attendanceList.html';
-					}
-					else{
-					    alert("as admin you cant register your attendance")
-						this.manualAttendanceUsername=""
+					.post("/api/addAttendance/", {
+					  //attendanceId: this.attendanceList[0].attendanceId,
+					  username: this.manualAttendanceUsername,
+					})
+					.then((result) => {
+						  if (result.data.success) {
+						alert(result.data.message);
+						this.id=localStorage.getItem('registerId')
+						this.manualAttendanceUsername='';
+						//this.viewRegister(result.data.registerId);
+						this.attendanceList=localStorage.setItem('yourList',result.data.yourList)
 						window.location.href = './attendanceList.html';
-					}
-					
-				})
+					  }
+					  else{
+						  alert(result.data.allertMessage)
+						  this.manualAttendanceUsername=""
+						  window.location.href = './attendanceList.html';
+					  }
+					  
+				  })
+				}
+				else{
+					this.manualAttendanceUsername=""
+					alert("As admin you cant submit your attandance")
+					window.location.href = './attendanceList.html';
+				}
 				 }
 				 else{
 					this.manualAttendanceUsername='';
