@@ -26,24 +26,26 @@ app.post("/api/addUser/", async (req,res)=>{
     //extract values values from the table
     const output= await selectUser(username,email,phoneNumber)
 
-    if (output.email)
+    if(output){
+      if (email)
     {
         res.json({
             error : "Email address already exist! Change your email."
         })
     }
-    else if(output.phoneNumber)
+    else if(phoneNumber)
     {
         res.json({
             error : "Phone number already exist! Change your phone number."
         })
     }
-    else if(output.username)
+    else if(username)
     {
         res.json({
             error : "Username already exist! Change your username."
         })
     }
+  }
     else 
     {
         const firstName =req.body.firstName
@@ -70,6 +72,8 @@ app.post("/api/addUser/", async (req,res)=>{
             success : "Registration successful!"
         })
     }
+    
+    
 });
 
 //Login
@@ -347,3 +351,10 @@ app.post("/api/addAttendance/", async (req, res) => {
     }
     
 });
+
+
+const output =await selectUser("malva","malva@gmail.com","2767253780");
+console.log(output)
+console.log(!output.email)
+
+

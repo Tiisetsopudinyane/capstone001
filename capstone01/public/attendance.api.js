@@ -95,7 +95,9 @@ document.addEventListener('alpine:init', () => {
 					  }).then((result)=>{
 						if(result.data.error){
 						alert(result.data.error);
-						}else{
+						}
+						else
+						{
 							alert(result.data.success);
 							this.firstName = '';
 							this.surname = '';
