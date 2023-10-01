@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Attendance List</title>
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="attendance.api.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body class="attendanceList" x-data="Attendance">
+    <div class="attendanceWrapper">
+      <div class="attendanceBtns">
+        <button class="attendanceBtn" @click="automatedAttendance">
+          Automated Attendance
+        </button>
+        <button
+          x-show="!showSearch"
+          class="attendanceBtn"
+          @click="viewEntireRegister"
+        >
+          View Entire Register
+        </button>
+        <button
+          x-show="showSearch"
+          class="attendanceBtn"
+          @click="searchAttendee"
+        >
+          Search Username
+        </button>
+        <button class="attendanceBtn" @click="manualAttendance">
+          Manual Attendance
+        </button>
+      </div>
+
+      <div x-show="showAutomatedAttendance" class="attendanceDiv">
+        Automated Attendance Content
+      </div>
+
+      <div x-show="showSearchAttendee" class="specificAttendanceList">
+        <!-- Content for Search for User -->
+        <form>
+          <input
+            type="text"
+            placeholder="Enter user name"
+            x-model="searchUser"
+            required
+          />
+          <button
+            type="button"
+            @click="submitSearch"
+            class="submitAttendanceSearch"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+
+      <div x-show="showManualAttendance" class="manualAttendance">
+        <form>
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            x-model="manualAttendanceUsername"
+            placeholder="Enter username"
+            required
+          />
+          
+          <button
+            type="button"
+            @click="submitManualAttendance"
+            x-bind:disabled="!manualAttendanceUsername || !manualAttendanceCheckInTime"
+            class="submitAddition"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+
+      <h2 x-text="`Attendance for ${attendanceName}`"></h2>
+      <div x-show="showFullAttendance" class="registerList-box">
+        <table border="1">
+          <thead>
+            <tr>
+              <!-- Create table headings based on the keys of the first attendance object -->
+              <template
+                x-for="(key, index) in Object.keys(attendanceList[0])"
+                :key="index"
+              >
+                <th x-text="key"></th>
+              </template>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Iterate through attendance objects and create table rows -->
+            <template
+              x-for="(attendance, index) in attendanceList"
+              :key="index"
+            >
+              <tr>
+                <!-- Iterate through the properties of each attendance object and populate table cells -->
+                <template x-for="(value, key) in attendance" :key="key">
+                  <td x-text="value"></td>
+                </template>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+
+      <div x-show="!showFullAttendance" class="registerList-box">
+        <table border="1">
+          <thead>
+            <tr>
+              <!-- Create table headings based on the keys of the first attendance object -->
+              <template
+                x-for="(key, index) in Object.keys(specificAttendanceList[0])"
+                :key="index"
+              >
+                <th x-text="key"></th>
+              </template>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Iterate through attendance objects and create table rows -->
+            <template
+              x-for="(attendance, index) in specificAttendanceList"
+              :key="index"
+            >
+              <tr>
+                <!-- Iterate through the properties of each attendance object and populate table cells -->
+                <template x-for="(value, key) in attendance" :key="key">
+                  <td x-text="value"></td>
+                </template>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,97 @@
+### Sign-up
+
+POST http://localhost:3011/api/addUser/
+content-type: application/json
+
+{
+  "firstName" : "sabeeha",
+  "surname" : "wasaber",
+  "email" : "sabzee@gmail.com",
+  "username" : "sabeehah",
+  "password" : "sabeehah",
+  "userType" : "attendee",
+  "phoneNumber" : "0213445"
+}
+
+### Login
+
+POST http://localhost:3011/api/login/
+content-type: application/json
+
+{
+  "username" : "sabeehah",
+  "password" : "sabeehah"
+}
+
+###  Get attendees 
+
+GET http://localhost:3011/api/getAttendees/
+
+### Submit register
+
+POST http://localhost:3011/api/submitRegister/
+content-type: application/json
+
+{
+  "registerName" : "dog pack",
+  "selectedAttendees" : ["lola","yousha","snowwy","snoops"],
+  "storedUsername" : "sabeehah"
+}
+
+###  Get registers 
+
+POST http://localhost:3011/api/getRegisters/
+content-type: application/json
+
+{
+  "storedUsername" : "sabeehah"
+}
+
+### Delete register
+
+POST http://localhost:3011/api/deleteRegister/
+content-type: application/json
+
+{
+  "registerId" : "9"
+}
+
+### View attendance
+
+POST http://localhost:3011/api/viewRegister/
+content-type: application/json
+
+{
+  "registerId" : "4"
+}
+
+### View specific attendance
+
+POST http://localhost:3011/api/viewSpecificRegister/
+content-type: application/json
+
+{
+  "registerId" : "4",
+  "attendeeName" : "sarah_w"
+}
+
+### View attendance
+
+POST http://localhost:3011/api/viewRegisterName/
+content-type: application/json
+
+{
+  "registerId" : 3
+}
+
+
+### Add attendance
+
+POST http://localhost:3011/api/addAttendance/
+content-type: application/json
+
+{
+  "registerId": 3,
+  "username": ",jbu",
+  "checkInTime": "2023-09-25T12:00:00"
+}

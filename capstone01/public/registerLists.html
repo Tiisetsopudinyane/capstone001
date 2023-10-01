@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register List</title>
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="attendance.api.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body class="registerLists" x-data="Attendance">
+    <div class="registerWrapper">
+      <h2>List of Registers</h2>
+      <div class="registerList-box">
+        <!-- Use x-for to dynamically create register list options -->
+        <template x-for="(register, index) in registerList" :key="index">
+          <div class="register-item">
+            <button @click="viewRegister(register.registerId)" class="view-btn">
+              View Register
+            </button>
+            <span x-text="register.registerName"></span>
+            <button
+              @click="deleteRegister(register.registerId)"
+              class="delete-btn"
+            >
+              Delete
+            </button>
+          </div>
+        </template>
+      </div>
+      <button
+        @click="window.location.href = './createRegister.html';"
+        class="createBtn"
+      >
+        Create Register
+      </button>
+    </div>
+  </body>
+</html>

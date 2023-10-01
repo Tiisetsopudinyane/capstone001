@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Automated Attendance</title>
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="attendance.api.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body class="createRegister" x-data="Attendance">
+    <div class="wrapper">
+      <form action="">
+        <h2>Create Register</h2>
+        <div class="input-box">
+          <i class="bx bx-user"></i>
+          <input
+            x-model="registerName"
+            type="text"
+            placeholder="Register Name"
+            required
+          />
+        </div>
+        <div class="select-input-box">
+          <label>Select Attendees:</label>
+          <!-- Use x-for to dynamically create attendee options -->
+          <template x-for="attendee in attendeeList" :key="attendee.userId">
+            <div class="option">
+              <input
+                type="checkbox"
+                x-model="selectedAttendees"
+                name="attendee[]"
+                :value="attendee.username"
+                :id="'attendee' + attendee.userId"
+                required
+              />
+              <label
+                :for="'attendee' + attendee.attendeeId"
+                x-html="attendee.username"
+              ></label>
+            </div>
+          </template>
+        </div>
+
+        <button type="submit" class="btn" @click="submitRegister(event)">
+          Create
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,632 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+
+/* Login  */
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 100vh;
+    background: url('./images/logo.png') no-repeat center top / 83vh auto, 
+                linear-gradient(to bottom, black 76%, rgb(0, 153, 254) 100%);
+    font-size: 3vh;
+    color: rgb(0, 153, 254);
+}
+
+@media screen and (max-width: 450px) {
+    /* Adjust background size for smaller screens */
+    .login {
+        background: url('./images/logo.png') no-repeat center top / 40vh auto, 
+        linear-gradient(to bottom, black 66%, rgb(0, 153, 254) 100%);
+    }
+}
+
+@media screen and (min-width: 451px) and (max-width: 920px) {
+    /* Adjust background size for medium-sized screens */
+    .login {
+        background-size: 67vh auto;
+    }
+}
+
+.wrapper {
+    background: transparent;
+    width: 100vh; /* Change '100dvh' to '100vh' */
+    color: rgb(0, 153, 254);
+    margin: 0 0.3em;
+    margin-bottom: 0.3em;
+    border-radius: 10px;
+    padding: 0px 30px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.427)
+}
+
+.wrapper h2 {
+    font-size: 7vh;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.input-box {
+    width: 100%;
+    height: 4vh;
+    margin: 0.8vh 0;
+    position: relative; /* Add this to the input box */
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px double rgb(0, 153, 254);
+    border-radius: 40px;
+    color: rgb(235, 252, 0);
+    padding: 0 5vh;
+    font-size: 3vh;
+    caret-color: rgb(235, 252, 0);
+}
+
+.input-box input::placeholder {
+    color: rgb(0, 91, 152);
+    padding-left: 2vh;
+    font-size: 3vh;
+}
+
+.input-box input::-ms-reveal {
+    filter: invert(100%);
+}
+
+
+.input-box input:focus {
+    outline: 2px solid rgb(235, 252, 0);
+}
+
+.input-box i {
+    position: absolute;
+    top: 59%;
+    left: 10px; /* Adjust the right position as needed */
+    transform: translateY(-50%); /* Vertically center the "i" icon */
+    color: rgb(235, 252, 0);
+}
+
+.wrapper .remember {
+    display: flex;
+    justify-content: space-between;
+}
+
+.remember label {
+    color: black;
+}
+.remember a {
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+}
+
+.remember a:hover {
+    color: rgb(235, 252, 0);
+    text-decoration: underline;
+}
+
+
+/* buttons CSS */
+.wrapper .btn {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px double rgb(0, 153, 254);
+    border-radius: 40px;
+    color: rgb(0, 153, 254);
+    font-size: 3vh;
+    transition: box-shadow 0.3s ease;
+    margin-top: 2%;
+}
+
+.wrapper .btn:hover {
+    box-shadow: 0 0 20px rgba(0, 153, 254, 0.7); /* Increase the box shadow on hover */
+}
+
+.wrapper .btn:active {
+    box-shadow: 0 0 30px rgb(235, 252, 0);; /* Increase box shadow when clicked */
+    transform: scale(0.97); /* Add a scaling effect when clicked */
+    color: rgb(235, 252, 0);
+}
+
+.wrapper .registration {
+    text-align: center;
+    margin-top: 0.1em;
+}
+
+.registration p{
+    color: rgba(0, 0, 0);
+}
+
+.registration p a {
+    color: rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+}
+
+.registration p a:hover {
+    color: rgb(235, 252, 0);
+    text-decoration: underline;
+}
+
+
+/* Sign up */
+.signup {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 100vh;
+    background: url('./images/logo.png') no-repeat center top / 52.4vh auto, 
+                linear-gradient(to bottom, black 50%, rgb(0, 153, 254) 100%);
+    font-size: 3vh;
+    color: rgb(0, 153, 254);
+}
+
+.input-box select#userType{
+    width: 100%;
+    height: 100%;
+    border: 2px double rgb(0, 153, 254);
+    border-radius: 40px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: rgb(235, 252, 0);
+    padding-left:4.6vh;
+    font-size: 2.8vh;
+    caret-color: rgb(235, 252, 0);
+    overflow: hidden; /* Hide overflowed text */
+    text-overflow: ellipsis;
+}
+
+.input-box select#userType option {
+    background-color:rgb(0, 153, 254); 
+}
+
+select#userType option:hover {
+    background-color:rgb(235, 252, 0); 
+    color: rgb(0, 153, 254);
+}
+
+@media screen and (max-width: 450px) {
+    /* Adjust background size for smaller screens */
+    .signup {
+        background-size: 40vh auto;
+    }
+}
+
+
+/*createRegister*/
+.createRegister {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 100vh;
+    background: url('./images/logo.png') no-repeat center top / 64vh auto, 
+                linear-gradient(to bottom, black 58%, rgb(0, 153, 254) 100%);
+    font-size: 3vh;
+    color: rgb(0, 153, 254);
+}
+.select-input-box {
+    display: flex;
+    flex-direction: column;
+    max-height: 147px; /* Adjust this height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    color: rgb(235, 252, 0);
+}
+
+@media screen and (max-width: 450px) {
+    .createRegister {
+        background-size: 40vh auto;
+    }
+}
+
+
+/*registerLists*/
+.registerLists{
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    background: url('./images/logo.png') no-repeat center top/ 30vh auto, 
+                linear-gradient(to bottom, black 31%, rgb(0, 153, 254) 100%);
+    font-size: 3vh;
+    color: rgb(0, 153, 254);
+}
+
+.registerList-box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    max-height: 72%; /* Adjust this height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+    color: rgb(235, 252, 0);
+}
+
+.registerWrapper {
+    background: transparent;
+    width: 90%; /* Set width to 100% for responsiveness */
+    height: calc(100vh - 8.2em);
+    color: rgb(0, 153, 254);
+    margin: 0.3em 0.3em;
+    margin-top: 8em;
+    border-radius: 10px;
+    padding: 0px 30px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.427);
+}
+
+.registerWrapper h2 {
+    font-size: 7vh;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.registerWrapper .createBtn {
+    width: 100%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px double rgb(0, 153, 254);
+    border-radius: 40px;
+    color: rgb(0, 153, 254);
+    font-size: 3vh;
+    transition: box-shadow 0.3s ease;
+    margin-top: 2%;
+}
+
+.registerWrapper .createBtn:hover {
+    box-shadow: 0 0 20px rgba(0, 153, 254, 0.7); /* Increase the box shadow on hover */
+}
+
+.registerWrapper .createBtn:active {
+    box-shadow: 0 0 30px rgb(235, 252, 0);; /* Increase box shadow when clicked */
+    transform: scale(0.97); /* Add a scaling effect when clicked */
+    color: rgb(235, 252, 0);
+}
+
+.registerWrapper .view-btn, .registerWrapper .delete-btn  {
+    width: 30%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px double rgb(0, 153, 254);
+    border-radius: 40px;
+    color: rgb(0, 153, 254);
+    font-size: 3vh;
+    transition: box-shadow 0.3s ease;
+}
+
+.registerWrapper .view-btn:hover, .registerWrapper .delete-btn:hover {
+    box-shadow: 0 0 20px rgba(0, 153, 254, 0.7); /* Increase the box shadow on hover */
+}
+
+.registerWrapper .view-btn:active, .registerWrapper .delete-btn:active {
+    box-shadow: 0 0 30px rgb(235, 252, 0);; /* Increase box shadow when clicked */
+    transform: scale(0.97); /* Add a scaling effect when clicked */
+    color: rgb(235, 252, 0);
+}
+.register-item {
+    border: 1px solid rgb(0, 153, 254); /* Add border around each register-item */
+    padding: 10px; /* Add some padding to space out the content */
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Vertically center the content */
+
+    margin: 5px 0; /* Add margin to separate each register-item */
+}
+
+.register-item button {
+    margin-right: 10px; /* Add margin to separate the buttons */
+}
+
+@media (max-width: 450px) {
+    .register-item {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .register-item .view-btn,
+    .register-item .delete-btn {
+      margin-top: 1em;
+      width: auto;
+    }
+  }
+  
+@media (max-width: 920px) {
+    .registerList-box {
+        display: flex;
+        flex-direction: column;
+        max-height: 62%; /* Adjust this height as needed */
+        overflow-y: auto; /* Enable vertical scrolling */
+        color: rgb(235, 252, 0);
+    }
+}
+
+
+/*Attendance List*/
+.attendanceList{
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    background: url('./images/logo.png') no-repeat center top/ 30vh auto, 
+                linear-gradient(to bottom, black 31%, rgb(0, 153, 254) 100%);
+    font-size: 3vh;
+    color: rgb(0, 153, 254);
+}
+
+.attendanceWrapper {
+    background: transparent;
+    width: 90%; /* Set width to 100% for responsiveness */
+    height: calc(100vh - 8.2em);
+    color: rgb(0, 153, 254);
+    margin: 0.3em 0.3em;
+    margin-top: 8em;
+    border-radius: 10px;
+    padding: 0px 30px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.427);
+}
+
+.attendanceWrapper h2 {
+    font-size: 7vh;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+.attendanceWrapper .attendanceBtn {
+    width: 30%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px double rgb(0, 153, 254);
+    border-radius: 40px;
+    color: rgb(0, 153, 254);
+    font-size: 3vh;
+    transition: box-shadow 0.3s ease;
+    margin-top: 1%;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.attendanceWrapper .attendanceBtn:hover {
+    box-shadow: 0 0 20px rgba(0, 153, 254, 0.7); /* Increase the box shadow on hover */
+}
+
+.attendanceWrapper .attendanceBtn:active {
+    box-shadow: 0 0 30px rgb(235, 252, 0);; /* Increase box shadow when clicked */
+    transform: scale(0.97); /* Add a scaling effect when clicked */
+    color: rgb(235, 252, 0);
+}
+
+.attendanceWrapper .attendanceBtns {
+    display: flex;
+    justify-content: space-between; /* This evenly spaces the buttons */
+    width: 100%; /* Optionally, set a width if needed */
+}
+
+.specificAttendanceList {
+    display: flex;
+    justify-content: center;
+}
+
+.specificAttendanceList input {
+    width: 68%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px double rgb(0, 153, 254);
+    border-radius: 40px;
+    color: rgb(235, 252, 0);
+    text-align: center;
+    font-size: 3vh;
+    margin-top: 1vh;
+    caret-color: rgb(235, 252, 0);
+}
+
+.specificAttendanceList input::placeholder {
+    color: rgba(235, 252, 0, 0.395);
+    text-align: center;
+    font-size: 3vh;
+}
+
+.specificAttendanceList input::-ms-reveal {
+    filter: invert(100%);
+}
+
+
+.specificAttendanceList input:focus {
+    outline: 2px solid rgb(235, 252, 0);
+}
+
+.specificAttendanceList .submitAttendanceSearch {
+    width: 30%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px double rgb(0, 153, 254);
+    border-radius: 40px;
+    color: rgb(0, 153, 254);
+    font-size: 3vh;
+    transition: box-shadow 0.3s ease;
+    margin-top: 1vh;
+}
+
+.attendanceWrapper .submitAttendanceSearch:hover {
+    box-shadow: 0 0 20px rgba(0, 153, 254, 0.7); /* Increase the box shadow on hover */
+}
+
+.attendanceWrapper .submitAttendanceSearch:active {
+    box-shadow: 0 0 30px rgb(235, 252, 0);; /* Increase box shadow when clicked */
+    transform: scale(0.97); /* Add a scaling effect when clicked */
+    color: rgb(235, 252, 0);
+}
+
+.manualAttendance {
+    display: flex;
+    justify-content: center;
+}
+
+.manualAttendance input {
+    width: 27%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px double rgb(0, 153, 254);
+    border-radius: 40px;
+    color: rgb(235, 252, 0);
+    text-align: center;
+    font-size: 3vh;
+    margin-top: 1vh;
+    caret-color: rgb(235, 252, 0);
+}
+
+.manualAttendance input::placeholder {
+    color: rgba(235, 252, 0, 0.395);
+    text-align: center;
+    font-size: 3vh;
+}
+
+.manualAttendance input::-ms-reveal {
+    filter: invert(100%);
+}
+
+
+.manualAttendance input:focus {
+    outline: 2px solid rgb(235, 252, 0);
+}
+
+.manualAttendance .submitAddition {
+    width: 10%;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px double rgb(0, 153, 254);
+    border-radius: 40px;
+    color: rgb(0, 153, 254);
+    font-size: 3vh;
+    transition: box-shadow 0.3s ease;
+    margin-top: 1vh;
+    transition: box-shadow 0.3s ease;
+    margin-top: 1vh;
+}
+
+.manualAttendance .submitAddition:hover {
+    box-shadow: 0 0 20px rgba(0, 153, 254, 0.7); /* Increase the box shadow on hover */
+}
+
+.manualAttendance .submitAddition:active {
+    box-shadow: 0 0 30px rgb(235, 252, 0);; /* Increase box shadow when clicked */
+    transform: scale(0.97); /* Add a scaling effect when clicked */
+    color: rgb(235, 252, 0);
+}
+
+@media (max-width: 450px) {
+    .attendanceWrapper h2 {
+        font-size: 5vh;
+    }
+    .attendanceWrapper .attendanceBtn {
+        width: 100%;
+        height: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 2px double rgb(0, 153, 254);
+        border-radius: 40px;
+        color: rgb(0, 153, 254);
+        font-size: 3vh;
+        transition: box-shadow 0.3s ease;
+        margin-top: 2%;
+    }
+
+    .attendanceWrapper .attendanceBtns {
+        display: inline;
+    }
+    .specificAttendanceList input {
+        width: 65%;
+        height: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 2px double rgb(0, 153, 254);
+        border-radius: 40px;
+        color: rgb(235, 252, 0);
+        font-size: 2vh;
+        text-align: center;
+        margin-top: 1vh;
+        caret-color: rgb(235, 252, 0);
+    }
+
+    .specificAttendanceList input::placeholder {
+        color: rgba(235, 252, 0, 0.395);
+        padding-left: 2vh;
+        font-size: 2vh;
+        text-align: left;
+    }
+
+    .specificAttendanceList .submitAttendanceSearch {
+        width: 30%;
+        height: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 2px double rgb(0, 153, 254);
+        border-radius: 40px;
+        color: rgb(0, 153, 254);
+        font-size: 2vh;
+        transition: box-shadow 0.3s ease;
+        margin-top: 1vh;
+    }
+
+    .manualAttendance .submitAddition {
+        width: 100%;
+        height: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 2px double rgb(0, 153, 254);
+        border-radius: 40px;
+        color: rgb(0, 153, 254);
+        font-size: 3vh;
+        transition: box-shadow 0.3s ease;
+        margin-top: 1vh;
+        transition: box-shadow 0.3s ease;
+        margin-top: 1vh;
+    }
+
+    .manualAttendance input{
+        display: block;
+        font-size: 1vh;
+     }
+}
+
+@media (max-width: 920px) {
+    .attendanceWrapper .attendanceBtn {
+        width: 100%;
+        height: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 2px double rgb(0, 153, 254);
+        border-radius: 40px;
+        color: rgb(0, 153, 254);
+        font-size: 2.5vh;
+        transition: box-shadow 0.3s ease;
+        margin-top: 1%;
+        padding: 0px 4px;
+    }
+
+    .manualAttendance .submitAddition {
+        width: 100%;
+        height: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 2px double rgb(0, 153, 254);
+        border-radius: 40px;
+        color: rgb(0, 153, 254);
+        font-size: 3vh;
+        transition: box-shadow 0.3s ease;
+        margin-top: 1vh;
+        transition: box-shadow 0.3s ease;
+        margin-top: 1vh;
+    }
+
+    .manualAttendance {
+        display: block;
+    }
+
+    .manualAttendance input{
+        width: 100%;
+        display: block;
+        font-size: 2vh;
+     }
+
+    
+}
