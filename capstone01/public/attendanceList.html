@@ -17,6 +17,7 @@
   </head>
   <body class="attendanceList" x-data="Attendance">
     <div class="attendanceWrapper">
+      <h6 x-text="`Welcome! ${displayName}`"><h6>
       <div class="attendanceBtns">
         <button class="attendanceBtn" @click="automatedAttendance">
           Automated Attendance
@@ -33,7 +34,7 @@
           class="attendanceBtn"
           @click="searchAttendee"
         >
-          Search Username
+          Search By Surname
         </button>
         <button class="attendanceBtn" @click="manualAttendance">
           Manual Attendance
@@ -49,7 +50,7 @@
         <form>
           <input
             type="text"
-            placeholder="Enter user name"
+            placeholder="Enter user surname"
             x-model="searchUser"
             required
           />

@@ -36,6 +36,14 @@ export async function selectByUsernameAndPasswordFromUser(username,password){
     const sql="select * from user where username = ? and password=?";
     return await db.get(sql,[username,password]);
 }
+export async function selectByUsernameFromUser(username){
+    const sql="select username from user where username=?";
+    return await db.get(sql,username)
+}
+export async function selectByUsePasswordFromUser(password){
+  const sql="select password from user where password=?";
+  return await db.get(sql,password)
+}
 
 //api/getAttendees
 export async function selectAtendees(){
@@ -87,10 +95,16 @@ export async function selectByattendeeIdFromUser(attendeeId){
     return await db.all(sql, attendeeId);
 }
 
+
 //api/viewSpecificRegister
 export async function selectByattendeeNameFromUser(surname){
     const sql="SELECT firstname,surname,email,phoneNumber,checkInTime,checkInDate FROM user join attendance on attendance.userId=user.id WHERE surname = ?  ORDER BY attendanceId DESC;"
     return await db.all(sql,surname);
+}
+
+export async function selectAllFromUserAndAttendanceById(attendeeId){
+    const sql='SELECT * FROM user join attendance on attendance.userId=user.id WHERE attendeeId =20 ORDER BY attendanceId DESC;'
+    await db.all(sql,attendeeId)
 }
 
 //api/viewRegisterName
@@ -108,6 +122,18 @@ export async function insertIntoAttendance(username,userId,attendeeId, checkInTi
     const sql='INSERT INTO attendance (username,userId, attendeeId, checkInTime,checkInDate) VALUES (?,?,?, ?, ?)';
     return await db.run(sql,[username,userId,attendeeId, checkInTime,checkInDate]);
 }
+
+export async function selectByUsernameFromRegister(username){
+    const sql="select * from register where attendee=?";
+    return await db.get(sql,username)
+}
+
+export async function selectDateFromAttendee(username,checkInDate){
+    const sql="select * from attendance where username=? and checkInDate=?";
+    return await db.get(sql,[username,checkInDate])
+}
+
+
 
 
 

@@ -19,6 +19,9 @@ document.addEventListener('alpine:init', () => {
 			registerList:'',
 			attendanceList:[],
 			attendanceName:'',
+			savedUserType:localStorage.getItem("userType"),
+			id:'',
+			displayName:localStorage.getItem('username'),
 			i:[],
 
 			init(){
@@ -113,12 +116,14 @@ document.addEventListener('alpine:init', () => {
 			//Login
 			login(event){
 				event.preventDefault();
+				
 				axios.post("/api/login/", {
 					username : this.username,
 					password : this.password
 				}).then((result)=>{
 					if(result.data.success){
 						localStorage.setItem("username", this.username);
+						localStorage.setItem('userType',result.data.userType);
 						this.username = '';
 						this.password = '';
 						if(result.data.userType==="admin")
@@ -170,10 +175,11 @@ document.addEventListener('alpine:init', () => {
 			},
 
 			viewRegister(registerId) {
+				localStorage.setItem('id',registerId)
+				this.id=localStorage.getItem('id')
 				axios.post("/api/viewRegister/", {
 				  registerId: registerId,
 				}).then((result) => {
-					localStorage.setItem("registerId",registerId)
 				  if (result.data.success) {
 					// Save attendanceList to localStorage
 					localStorage.setItem('attendanceList', JSON.stringify(result.data.attendance));
@@ -224,6 +230,7 @@ document.addEventListener('alpine:init', () => {
 				this.showAutomatedAttendance = false;
 				this.showSearchAttendee = false;		
 				this.showManualAttendance = true;
+				window.location.href='./scanner.html';
 		    },
     
 			deleteAttendance() {
@@ -231,7 +238,7 @@ document.addEventListener('alpine:init', () => {
 				this.showSearchAttendee = false;
 				this.showManualAttendance = false;
 			},
-
+            
 			submitSearch(event){
 				event.preventDefault();
 				axios.post("/api/viewSpecificRegister/", {
@@ -254,42 +261,62 @@ document.addEventListener('alpine:init', () => {
 			// 
 			submitManualAttendance(event) {
 				event.preventDefault();
-				axios
+				 
+				 const username=localStorage.getItem('username')
+				 if(username===this.manualAttendanceUsername || saveUserType!="admin"){
+					axios
 				  .post("/api/addAttendance/", {
 					//attendanceId: this.attendanceList[0].attendanceId,
 					username: this.manualAttendanceUsername,
 				  })
 				  .then((result) => {
-					if (result.data.success) {
+						if (result.data.success) {
 					  alert(result.data.message);
-					  registerId=localStorage.getItem('registerId')
-					  axios.post("/api/viewRegister/", {
+					  this.id=localStorage.getItem('registerId')
+					  this.manualAttendanceUsername='';
+					  //this.viewRegister(result.data.registerId);
+					  this.attendanceList=localStorage.setItem('yourList',result.data.yourList)
+					  window.location.href = './attendanceList.html';
+					}
+					else{
+					    alert("as admin you cant register your attendance")
+						this.manualAttendanceUsername=""
+						window.location.href = './attendanceList.html';
+					}
+					
+				})
+				 }
+				 else{
+					this.manualAttendanceUsername='';
+					alert("you cant register attendance for other user or if you are admin")
+				 }
+				// 	  axios.post("/api/viewRegister/", {
 						
-					  registerId: registerId,
-					  })
-					  .then((viewResult) => {
-						if (viewResult.data.success) {
-						  // Update the attendanceList directly
-						  this.attendanceList = viewResult.data.attendance;
-						  this.attendanceName=viewResult.data.registerName;
-						} else {
-						  alert(viewResult.data.error);
-						}
-					  })
-					  .catch((error) => {
-						console.error("An error occurred:", error);
-					  });
+				// 	  registerId: registerId,
+				// 	  })
+				// 	  .then((viewResult) => {
+				// 		if (viewResult.data.success) {
+				// 		  // Update the attendanceList directly
+				// 		  this.attendanceList = viewResult.data.attendance;
+				// 		  this.attendanceName=viewResult.data.registerName;
+				// 		} else {
+				// 		  alert(viewResult.data.error);
+				// 		}
+				// 	  })
+				// 	  .catch((error) => {
+				// 		console.error("An error occurred:", error);
+				// 	  });
 					  
-					} else {
-					  alert(result.data.error);
-					};
-				    this.manualAttendanceUsername ='';
-				  })
-				  .catch((error) => {
-					// Handle the error here, e.g., show a user-friendly error message.
-					console.error("An error occurred:", error);
-					alert("An error occurred while submitting attendance.");
-				  });
+				// 	} else {
+				// 	  alert(result.data.error);
+				// 	};
+				//     this.manualAttendanceUsername ='';
+				//   })
+				//   .catch((error) => {
+				// 	// Handle the error here, e.g., show a user-friendly error message.
+				// 	console.error("An error occurred:", error);
+				// 	alert("An error occurred while submitting attendance.");
+				//   });
 			  },
 			  
 		}
