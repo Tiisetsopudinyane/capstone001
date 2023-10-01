@@ -20,7 +20,7 @@ CREATE TABLE if not exists attendee (
 
 -- Create the register table
 -- Allows admin to create a register an assign attendees to it.
-CREATE TABLE if not exists register (
+CREATE TABLE register (
     registerId INTEGER NOT NULL,
     attendanceId INTEGER NOT NULL,
     registerName VARCHAR(255) NOT NULL,
@@ -54,4 +54,8 @@ CREATE TABLE if not exists attendance(
     FOREIGN KEY (userId) REFERENCES user (id)
 );
 
+<<<<<<< HEAD
 -- drop table register
+=======
+--drop table register
+>>>>>>> 86144682cadc9aa32bee76968316a07bd5f0255c

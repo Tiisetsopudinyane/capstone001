@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\pudin\Downloads\capstone01\capstone01\.model
+set VIRTUAL_ENV=C:\Users\Gennifer Motsumi\Desktop\projects\capstone001\capstone01\.model
 
 if not defined PROMPT set PROMPT=$P$G
 
