@@ -26,12 +26,20 @@
         background: url('./images/logo.png') no-repeat center top / 40vh auto, 
         linear-gradient(to bottom, black 66%, rgb(0, 153, 254) 100%);
     }
+    .aside{
+        display: block;
+        margin-bottom:.3em ;
+    }
 }
 
 @media screen and (min-width: 451px) and (max-width: 920px) {
     /* Adjust background size for medium-sized screens */
     .login {
         background-size: 67vh auto;
+    }
+    .aside{
+        display: block;
+        margin-bottom:.3em ;
     }
 }
 .section{
@@ -55,7 +63,7 @@
 .inner{
     background: transparent;
     width: 100%; /* Change '100dvh' to '100vh' */
-    height: 80%;
+    height: 45vh;
     margin: 0.2em;
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.427)
@@ -226,6 +234,18 @@ select#userType option:hover {
     .signup {
         background-size: 40vh auto;
     }
+    .aside{
+        display: block;
+        margin-bottom:.3em ;
+    }
+    .inner{
+        background: transparent;
+        width: 100%; /* Change '100dvh' to '100vh' */
+        height: 45vh;
+        margin: 0.2em;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.427)
+    }
 }
 
 
@@ -251,6 +271,18 @@ select#userType option:hover {
 @media screen and (max-width: 450px) {
     .createRegister {
         background-size: 40vh auto;
+    }
+    .aside{
+        display: block;
+        margin-bottom:.3em ;
+    }
+    .inner{
+        background: transparent;
+        width: 100%; /* Change '100dvh' to '100vh' */
+        height: 45vh;
+        margin: 0.2em;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.427)
     }
 }
 
@@ -357,7 +389,18 @@ select#userType option:hover {
       align-items: center;
       text-align: center;
     }
-  
+    .aside{
+        display: block;
+        margin-bottom:.3em ;
+    }
+    .inner{
+        background: transparent;
+        width: 100%; /* Change '100dvh' to '100vh' */
+        height: 45vh;
+        margin: 0.2em;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.427)
+    }
     .register-item .view-btn,
     .register-item .delete-btn {
       margin-top: 1em;
@@ -372,6 +415,18 @@ select#userType option:hover {
         max-height: 62%; /* Adjust this height as needed */
         overflow-y: auto; /* Enable vertical scrolling */
         color: rgb(235, 252, 0);
+    }
+    .aside{
+        display: block;
+        margin-bottom:.3em ;
+    }
+    .inner{
+        background: transparent;
+        width: 100%; /* Change '100dvh' to '100vh' */
+        height: 45vh;
+        margin: 0.2em;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.427)
     }
 }
 
@@ -552,6 +607,14 @@ select#userType option:hover {
     .attendanceWrapper h2 {
         font-size: 5vh;
     }
+    .inner{
+        background: transparent;
+        width: 100%; /* Change '100dvh' to '100vh' */
+        height: 45vh;
+        margin: 0.2em;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.427)
+    }
     .attendanceWrapper .attendanceBtn {
         width: 100%;
         height: auto;
@@ -563,7 +626,10 @@ select#userType option:hover {
         transition: box-shadow 0.3s ease;
         margin-top: 2%;
     }
-
+    .aside{
+        display: block;
+        margin-bottom:.3em ;
+    }
     .attendanceWrapper .attendanceBtns {
         display: inline;
     }
@@ -631,6 +697,18 @@ select#userType option:hover {
         transition: box-shadow 0.3s ease;
         margin-top: 1%;
         padding: 0px 4px;
+    }
+    .aside{
+        display: block;
+        margin-bottom:.3em ;
+    }
+    .inner{
+        background: transparent;
+        width: 100%; /* Change '100dvh' to '100vh' */
+        height: 45vh;
+        margin: 0.2em;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.427)
     }
 
     .manualAttendance .submitAddition {

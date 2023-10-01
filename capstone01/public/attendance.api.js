@@ -120,8 +120,18 @@ document.addEventListener('alpine:init', () => {
 						localStorage.setItem("username", this.username);
 						this.username = '';
 						this.password = '';
-						window.location.href = './registerLists.html';   	 
-					}else{
+						if(result.data.userType==="admin")
+						{
+							window.location.href = './registerLists.html';
+						}
+						else
+						{
+							window.location.href = './scanner.html';
+						}
+						   	 
+					}
+					else
+					{
 						alert(result.data.error)
 					}
 				})

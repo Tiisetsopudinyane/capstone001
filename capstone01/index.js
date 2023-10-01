@@ -80,7 +80,10 @@ app.post("/api/login/", async (req,res)=>{
     if (output.username && output.password)
     {
         res.json({
-            success : "Login successful!"
+            success : "Login successful!",
+            userType:output.userType,
+            firstName:output.firstName,
+            surname:output.surname
         })
     }
     else if(!output.username)
