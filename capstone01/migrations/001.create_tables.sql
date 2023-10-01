@@ -54,4 +54,4 @@ CREATE TABLE if not exists attendance(
     FOREIGN KEY (userId) REFERENCES user (id)
 );
 
-drop table register
+-- drop table register
