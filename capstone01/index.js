@@ -4,7 +4,7 @@ import {selectUser,insertUser,selectByusernameFromUser,insertAdmin,insertAttende
   selectByUsernameAndPasswordFromUser,selectAtendees,selectAllByRegisterNameFromRegister,selectIdByUserNameFromAttendee,
   selectMaximumRegistrationId,insertIntoRegister,selectByAdminNameFromRegister,selectByRegisterIdFromRegister,
   deleteByRegisterIdFromRegister,selectByRegisterFromRegister,selectByattendeeIdFromUser,
-  selectByattendeeNameFromUser,selectByAttendanceIdFromRegister,selectByUsernameFromAttendee,insertIntoAttendee} from './sql.queries.js'
+  selectByattendeeNameFromUser,selectByAttendanceIdFromRegister,selectByUsernameFromAttendee,insertIntoAttendance} from './sql.queries.js'
 import {dateGenerater,timeGenerater} from './dateTimeGenerator.js'
 
 
@@ -309,14 +309,14 @@ app.post("/api/getRegisters/", async (req, res) => {
 
 //Add Attendance
 app.post("/api/addAttendance/", async (req, res) => {
-    const { registerId, username} = req.body;
+    //const attendanceId = req.body.attendanceId;
+    const username=req.body.username;
 
     //generate currrnt time and date
     const checkInDate=dateGenerater()
     const checkInTime=timeGenerater()
     // Check if both username and attendeeId exist
     const usernameRow = await selectByUsernameFromAttendee(username)
-
     if (!usernameRow.username) 
     {
       res.json({
@@ -325,14 +325,16 @@ app.post("/api/addAttendance/", async (req, res) => {
     }
     else
     {
-      await insertIntoAttendee(usernameRow.username,usernameRow.userId, usernameRow.attendeeId, checkInTime,checkInDate);
+      
+      await insertIntoAttendance(usernameRow.username,usernameRow.userId, usernameRow.attendeeId, checkInTime,checkInDate);
+      //await insertIntoAttendee(usernameRow.username,usernameRow.userId, usernameRow.attendeeId, timeGenerater(),dateGenerater());
       res.json({
         success: true,
         message: "Attendance added successfully.",
       });
     }
 });
-
-
-//console.log(await selectByattendeeIdFromUser(20))
+//const usernameRow=await selectByUsernameFromAttendee('lerato')
+//console.log(await insertIntoAttendance(usernameRow.username,usernameRow.userId, usernameRow.attendeeId, timeGenerater(),dateGenerater()))
+//console.log(usernameRow.username+" "+dateGenerater()+ " "+!usernameRow.username)
   

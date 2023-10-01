@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sign-up</title>
+    <title>scanner</title>
 
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
@@ -20,6 +20,25 @@
        <div class="inner"></div>
         <p>Press once to scan your face</p>
         <button type="submit" class="btn" @click="">Scan</button>
+        <div class="manualAttendance">
+            <form>
+              <label for="username">Username:</label>
+              <input
+                type="text"
+                id="username"
+                x-model="manualAttendanceUsername"
+                placeholder="Enter username"
+                required
+              />
+              
+              <button
+                type="button"
+                @click="submitManualAttendance" class="submitAddition"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
     </div>
   </body>
 </html>

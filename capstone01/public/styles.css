@@ -552,7 +552,8 @@ select#userType option:hover {
 }
 
 .manualAttendance input {
-    width: 27%;
+    width: max-content;
+    padding: 0 .3em;
     height: auto;
     background-color: rgba(0, 0, 0, 0.7);
     border: 2px double rgb(0, 153, 254);
@@ -580,8 +581,9 @@ select#userType option:hover {
 }
 
 .manualAttendance .submitAddition {
-    width: 10%;
+    width: max-content;
     height: auto;
+    padding: 0 .3em;
     background-color: rgba(0, 0, 0, 0.7);
     border: 2px double rgb(0, 153, 254);
     border-radius: 40px;

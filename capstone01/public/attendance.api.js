@@ -12,6 +12,7 @@ document.addEventListener('alpine:init', () => {
 			userType:'',
 			phoneNumber:'',
 			searchUser:'',
+			manualAttendanceUsername:'',
 			emailValid: true,
 			attendeeList: '',
 			selectedAttendees: [],
@@ -172,6 +173,7 @@ document.addEventListener('alpine:init', () => {
 				axios.post("/api/viewRegister/", {
 				  registerId: registerId,
 				}).then((result) => {
+					localStorage.setItem("registerId",registerId)
 				  if (result.data.success) {
 					// Save attendanceList to localStorage
 					localStorage.setItem('attendanceList', JSON.stringify(result.data.attendance));
@@ -254,16 +256,16 @@ document.addEventListener('alpine:init', () => {
 				event.preventDefault();
 				axios
 				  .post("/api/addAttendance/", {
-					registerId: this.attendanceList[0].registerId,
+					//attendanceId: this.attendanceList[0].attendanceId,
 					username: this.manualAttendanceUsername,
-					attendeeId: this.manualAttendanceAttendeeId,
-					checkInTime: this.manualAttendanceCheckInTime,
 				  })
 				  .then((result) => {
 					if (result.data.success) {
 					  alert(result.data.message);
+					  registerId=localStorage.getItem('registerId')
 					  axios.post("/api/viewRegister/", {
-					  registerId: this.attendanceList[0].registerId,
+						
+					  registerId: registerId,
 					  })
 					  .then((viewResult) => {
 						if (viewResult.data.success) {
@@ -281,7 +283,6 @@ document.addEventListener('alpine:init', () => {
 					} else {
 					  alert(result.data.error);
 					};
-					this.manualAttendanceCheckInTime ='';
 				    this.manualAttendanceUsername ='';
 				  })
 				  .catch((error) => {

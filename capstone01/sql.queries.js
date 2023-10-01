@@ -104,8 +104,8 @@ export async function selectByUsernameFromAttendee(username){
     const sql="SELECT * FROM attendee WHERE username=?";
     return await db.get(sql, username);
 }
-export async function insertIntoAttendee(username,userId,attendeeId, checkInTime,checkInDate){
-    const sql='INSERT INTO attendance (username,userId, attendeeId, checkInTime) VALUES (?, ?, ?)';
+export async function insertIntoAttendance(username,userId,attendeeId, checkInTime,checkInDate){
+    const sql='INSERT INTO attendance (username,userId, attendeeId, checkInTime,checkInDate) VALUES (?,?,?, ?, ?)';
     return await db.run(sql,[username,userId,attendeeId, checkInTime,checkInDate]);
 }
 
