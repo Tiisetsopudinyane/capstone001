@@ -4,7 +4,7 @@ CREATE TABLE if not exists user (
     firstName TEXT NOT NULL,
     surname TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
-    phoneNumber INTEGER UNIQUE,
+    phoneNumber INTEGER,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     userType TEXT NOT NULL CHECK (userType IN ('admin', 'attendee'))
@@ -13,9 +13,11 @@ CREATE TABLE if not exists user (
 -- Create the attendee table linked to the user table
 CREATE TABLE if not exists attendee (
     attendeeId INTEGER PRIMARY KEY AUTOINCREMENT,
+    registerId INTEGER NOT NULL,
     userId INTEGER NOT NULL UNIQUE,
     username TEXT NOT NULL UNIQUE,
     FOREIGN KEY (userId) REFERENCES user (id)
+    FOREIGN KEY (registerId) REFERENCES register (registerId)
 );
 
 -- Create the register table
@@ -45,6 +47,7 @@ CREATE TABLE if not exists admin (
 CREATE TABLE if not exists attendance(
     attendanceId INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL,
+    registerId INTEGER NOT NULL,
     userId INTEGER NOT NULL,
     attendeeId INTEGER NOT NULL,
     checkInTime TIMESTAMP NOT NULL,
@@ -52,10 +55,12 @@ CREATE TABLE if not exists attendance(
     FOREIGN KEY (attendeeId) REFERENCES attendee (attendeeId),
     FOREIGN KEY (username) REFERENCES attendee (username),
     FOREIGN KEY (userId) REFERENCES user (id)
+    FOREIGN KEY (registerId) REFERENCES register (registerId)
 );
 
 <<<<<<< HEAD
 -- drop table register
 =======
---drop table register
+-- drop table user
 >>>>>>> 86144682cadc9aa32bee76968316a07bd5f0255c
+

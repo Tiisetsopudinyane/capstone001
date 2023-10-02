@@ -15,33 +15,15 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
-  <body class="signup" x-data="Attendance">
+  <body class="scanner" x-data="Attendance">
     <div class="wrapper">
       <h6 x-text="`Welcome! ${displayName}`"><h6>
        <div class="inner"></div>
         <p>Press once to scan your face</p>
         <button type="submit" class="btn" @click="">Scan</button>
-        <div class="manualAttendance">
-            <form>
-              <label for="username">Username:</label>
-              <input
-                type="text"
-                id="username"
-                x-model="manualAttendanceUsername"
-                placeholder="Enter username"
-                required
-              />
-
-              <img src="{{ url_for('video_feed') }}" alt="Webcam Feed">
-              
-              <button
-                type="button"
-                @click="submitManualAttendance" class="submitAddition"
-              >
-                Submit
-              </button>
-            </form>
+        <div class="img">
+          <img src="{{ url_for('video_feed') }}" alt="Webcam Feed">
           </div>
     </div>
-  </body>
+</body>
 </html>
