@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>scanner</title>
+
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="attendance.api.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body class="manualAttendance" x-data="Attendance">
+    <div class="wrapper">
+      <h6 x-text="`Welcome! ${displayName}`"><h6>
+      <h4>ENTER YOUR USERNAME TO TAKE MANUAL ATTENDANCE</h4>
+    <form class="input-box">
+      
+      <label for="username">Username:</label>
+      <input 
+        type="text"
+        id="username"
+        x-model="manualAttendanceUsername"
+        placeholder="Enter username"
+        required
+      />
+
+      <button
+        class="submitAddition"
+        type="button"
+        @click="submitManualAttendance" class="attendanceBtn"
+      >
+        Submit
+      </button>
+    </form>
+    <BR>
+    <button type="submit" class="btn" @click="automatedAttendance()">Go to auto scanner</button>
+    <button type="submit" class="btn" @click="viewAttendanceList()">Go to attendance list</button>
+    </div>
+ </body>
+</html>

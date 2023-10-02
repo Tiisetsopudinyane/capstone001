@@ -247,7 +247,40 @@ select#userType option:hover {
         border: 1px solid rgba(255, 255, 255, 0.427)
     }
 }
+/*scanner*/
+.scanner {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 100vh;
+    background: url('./images/logo.png') no-repeat center top / 40vh auto, 
+                linear-gradient(to bottom, black 58%, rgb(0, 153, 254) 100%);
+    font-size: 3vh;
+    color: rgb(0, 153, 254);
+}
+.img img{
+    color: rgb(235, 252, 0);
+}
+.img{
+    text-align: center;
+}
 
+/*manualScanner*/
+.manualAttendance{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 100vh;
+    background: url('./images/logo.png') no-repeat center top / 40vh auto, 
+                linear-gradient(to bottom, black 58%, rgb(0, 153, 254) 100%);
+    font-size: 3vh;
+    color: rgb(0, 153, 254);
+}
+.manualAttendance .wrapper{
+    margin: auto;
+    height: max-content;
+    padding: 2em;
+}
 
 /*createRegister*/
 .createRegister {

@@ -36,12 +36,12 @@
         >
           Search By Surname
         </button>
-        <button class="attendanceBtn" @click="manualAttendance">
+        <button class="attendanceBtn" @click="manualAttendance()">
           Manual Attendance
         </button>
       </div>
 
-      <div x-show="showAutomatedAttendance" class="attendanceDiv">
+      <div x-show="showAutomatedAttendance" class="attendanceDiv" @click="automatedAttendance()">
         Automated Attendance Content
       </div>
 

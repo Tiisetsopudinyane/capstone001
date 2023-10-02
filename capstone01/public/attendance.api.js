@@ -14,9 +14,10 @@ document.addEventListener('alpine:init', () => {
 			searchUser:'',
 			manualAttendanceUsername:'',
 			emailValid: true,
-			attendeeList: '',
+			attendeeList: [],
 			selectedAttendees: [],
 			registerList:'',
+			registerName:'',
 			attendanceList:[],
 			attendanceName:'',
 			savedUserType:localStorage.getItem("userType"),
@@ -29,6 +30,7 @@ document.addEventListener('alpine:init', () => {
 				axios.get("/api/getAttendees/").then((result) => {
 					if (result.data.success) {
 						// Assuming result.data.attendees is an array of attendees
+						localStorage.setItem('attendees',result.data.attendees)
 						this.attendeeList = result.data.attendees;
 					} else {
 						// Handle the case when no attendees are found or an error occurs
@@ -53,7 +55,7 @@ document.addEventListener('alpine:init', () => {
 				//Get specific register name
 				
 				this.attendanceList = JSON.parse(localStorage.getItem('attendanceList'));
-				
+				console.log(this.attendanceList[0].attendanceId)
 				axios.post("/api/viewRegisterName/", {
 					attendanceId : this.attendanceList[0].attendanceId,
 				}).then((result)=>{
@@ -95,7 +97,9 @@ document.addEventListener('alpine:init', () => {
 					  }).then((result)=>{
 						if(result.data.error){
 						alert(result.data.error);
-						}else{
+						}
+						else
+						{
 							alert(result.data.success);
 							this.firstName = '';
 							this.surname = '';
@@ -142,23 +146,32 @@ document.addEventListener('alpine:init', () => {
 					}
 				})
 			},
-
+			goToAutoScanner(){
+				window.location.href= "./scanner.html";
+			},
 			submitRegister(event){
 				event.preventDefault();
 				const storedUsername = localStorage.getItem("username");
 				axios.post("/api/submitRegister/", {
 					selectedAttendees : this.selectedAttendees,
-					registerName : this.attendanceName,
+					registerName : this.registerName,
 					storedUsername : storedUsername
 				}).then((result)=>{
-					if(result.data.success){
-						this.selectedAttendees=[];
-						this.attendanceName=''; 
-						alert("Register has been created, successfully!")
-						window.location.href = './registerLists.html';  	 
-					}else{
-						alert(result.data.error);
+					if(result.data.userType==="admin"){
+						if(result.data.success){
+							this.selectedAttendees=[];
+							this.registerName=''; 
+							alert("Register has been created, successfully!")
+							window.location.href = './registerLists.html';  	 
+						}else if(result.data.error){
+							this.registerName='';
+							alert(result.data.error);
+						}
 					}
+					else{
+						alert("Attendee is not permitted to create register")
+					}
+					
 				})
 			},
 
@@ -183,7 +196,9 @@ document.addEventListener('alpine:init', () => {
 				  if (result.data.success) {
 					// Save attendanceList to localStorage
 					localStorage.setItem('attendanceList', JSON.stringify(result.data.attendance));
-				    this.attendanceName=result.data.registerName
+					this.attendanceList=localStorage.getItem('attendanceList');
+				    localStorage.setItem('registerName',result.data.registerName)
+				    this.attendanceName=localStorage.getItem('registerName')
 					window.location.href = './attendanceList.html';
 				  } else {
 					alert(result.data.error);
@@ -216,7 +231,8 @@ document.addEventListener('alpine:init', () => {
             automatedAttendance() {
 				this.showAutomatedAttendance = true;     
 				this.showSearchAttendee = false;           
-				this.showManualAttendance = false;           
+				this.showManualAttendance = false; 
+				window.location.href= "./scanner.html";          
 			},
        
 			searchAttendee() {          
@@ -225,12 +241,16 @@ document.addEventListener('alpine:init', () => {
 				this.showManualAttendance = false;
 				this.showSearch = false;
 			},
+			viewAttendanceList(){
+				this.registerName
+               window.location.href="./attendanceList.html";
+			},
 
 			manualAttendance() {
 				this.showAutomatedAttendance = false;
 				this.showSearchAttendee = false;		
 				this.showManualAttendance = true;
-				window.location.href='./scanner.html';
+				window.location.href='./manualScanner.html';
 		    },
     
 			deleteAttendance() {
@@ -272,20 +292,22 @@ document.addEventListener('alpine:init', () => {
 					  username: this.manualAttendanceUsername,
 					})
 					.then((result) => {
+						localStorage.setItem('attendees',result.data.attendees)
 						  if (result.data.success) {
 						alert(result.data.message);
 						this.id=localStorage.getItem('registerId')
 						this.manualAttendanceUsername='';
-						//this.viewRegister(result.data.registerId);
-						this.attendanceList=localStorage.setItem('yourList',result.data.yourList)
+						this.attendanceList=localStorage.getItem('attendees')
+						
 						window.location.href = './attendanceList.html';
 					  }
 					  else{
 						  alert(result.data.allertMessage)
+						  this.attendanceList=localStorage.getItem('attendees')
 						  this.manualAttendanceUsername=""
 						  window.location.href = './attendanceList.html';
 					  }
-					  
+					  console.log(this.attendanceList)
 				  })
 				}
 				else{
