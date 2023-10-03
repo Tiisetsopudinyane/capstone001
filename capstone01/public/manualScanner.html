@@ -23,8 +23,8 @@
           <!-- Use x-for to dynamically create attendee options -->
           <template x-for="register in registeredList" :key="register.registerId">
             <div class="option">
-              <label :for="'register' + register.registerId" x-html="register.registerName"></label>
-<input
+              <input
+class="radio"
   type="radio"
   x-model="selectedRegisterName"
   name="register[]"
@@ -32,13 +32,16 @@
   :id="'register' + register.registerId"
   required
 />
+              <label :for="'register' + register.registerId" x-html="register.registerName"></label>
+
 
             </div>
           </template>
         </div>
+        <br>
       <h4>ENTER YOUR USERNAME TO TAKE MANUAL ATTENDANCE</h4>
     <form class="input-box">
-      <label for="username">Username:</label>
+      <label class="name" for="username">Username:</label>
       <input 
         type="text"
         id="username"
@@ -54,10 +57,9 @@
       >
         Submit
       </button>
+      <button type="button" class="submitAddition" @click="automatedAttendance()">Go to auto scanner</button>
+      <button type="button" class="submitAddition" @click="viewAttendanceList()">Go to attendance list</button>
     </form>
-    <BR>
-    <button type="submit" class="btn" @click="automatedAttendance()">Go to auto scanner</button>
-    <button type="submit" class="btn" @click="viewAttendanceList()">Go to attendance list</button>
     </div>
  </body>
 </html>

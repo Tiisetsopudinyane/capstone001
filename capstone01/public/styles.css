@@ -193,7 +193,16 @@
     text-decoration: underline;
 }
 
-
+.manualAttendance .wrapper{
+    margin: 5px;
+    width: auto;
+    top: 0;
+    height: auto;
+    padding: 2em;
+}
+.manualAttendance .wrapper h6,h4,.name{
+    color: rgb(235, 252, 0);
+}
 /* Sign up */
 .signup {
     display: flex;
@@ -204,6 +213,9 @@
                 linear-gradient(to bottom, black 50%, rgb(0, 153, 254) 100%);
     font-size: 3vh;
     color: rgb(0, 153, 254);
+}
+.signup .aside{
+    display: flex;
 }
 
 .input-box select#userType{
@@ -238,6 +250,11 @@ select#userType option:hover {
         display: block;
         margin-bottom:.3em ;
     }
+    .signup .aside{
+        display: block;
+        width: auto;
+        margin: 5px;
+    }
     .inner{
         background: transparent;
         width: 100%; /* Change '100dvh' to '100vh' */
@@ -245,6 +262,13 @@ select#userType option:hover {
         margin: 0.2em;
         backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.427)
+    }
+    .manualAttendance .wrapper{
+        margin:5px;
+        width: auto;
+        top: 0;
+        height: auto;
+        padding: 2em;
     }
 }
 /*scanner*/
@@ -276,11 +300,7 @@ select#userType option:hover {
     font-size: 3vh;
     color: rgb(0, 153, 254);
 }
-.manualAttendance .wrapper{
-    margin: auto;
-    height: max-content;
-    padding: 2em;
-}
+
 
 /*createRegister*/
 .createRegister {
@@ -300,6 +320,10 @@ select#userType option:hover {
     overflow-y: auto; /* Enable vertical scrolling */
     color: rgb(235, 252, 0);
 }
+.radio{
+    flex: 1;
+    width:max-content;
+}
 
 @media screen and (max-width: 450px) {
     .createRegister {
@@ -316,6 +340,12 @@ select#userType option:hover {
         margin: 0.2em;
         backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.427)
+    }
+    .manualAttendance .wrapper{
+        margin: 5px;
+        width: auto;
+        height: auto;
+        padding: 2em;
     }
 }
 
@@ -422,6 +452,10 @@ select#userType option:hover {
       align-items: center;
       text-align: center;
     }
+    .signup .aside .wrapper{
+        width: auto;
+        margin: 5px;
+    }
     .aside{
         display: block;
         margin-bottom:.3em ;
@@ -448,6 +482,15 @@ select#userType option:hover {
         max-height: 62%; /* Adjust this height as needed */
         overflow-y: auto; /* Enable vertical scrolling */
         color: rgb(235, 252, 0);
+    }
+    .signup .aside{
+        display: block;
+        width: auto;
+        margin: 5px;
+    }
+    .signup .aside .wrapper{
+        width: auto;
+        margin: 5px;
     }
     .aside{
         display: block;
@@ -637,7 +680,15 @@ select#userType option:hover {
     transform: scale(0.97); /* Add a scaling effect when clicked */
     color: rgb(235, 252, 0);
 }
-
+.manualAttendance .option{
+    display: flex;
+}
+.manualAttendance .option label{
+    flex: 3;
+}
+.manualAttendance .option input{
+    flex: 1;
+}
 @media (max-width: 450px) {
     .attendanceWrapper h2 {
         font-size: 5vh;
@@ -745,6 +796,12 @@ select#userType option:hover {
         backdrop-filter: blur(20px);
         border: 1px solid rgba(255, 255, 255, 0.427)
     }
+    .manualAttendance .option{
+        display: flex;
+    }
+    .manualAttendance .option input,label{
+        flex: 1;
+    }
 
     .manualAttendance .submitAddition {
         width: 100%;
@@ -764,9 +821,9 @@ select#userType option:hover {
         display: block;
     }
 
-    .manualAttendance input{
-        width: 100%;
-        display: block;
+    .manualAttendance input {
+        width: max-content;
+        display: flex;
         font-size: 2vh;
      }
 
