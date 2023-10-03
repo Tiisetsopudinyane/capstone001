@@ -13,6 +13,14 @@ content-type: application/json
   "phoneNumber" : "0213445"
 }
 
+###
+POST http://localhost:3011/api/registerNames/
+content-type: application/json
+
+{
+  "username":"xolani"
+}
+
 ### Login
 
 POST http://localhost:3011/api/login/
@@ -91,7 +99,15 @@ POST http://localhost:3011/api/addAttendance/
 content-type: application/json
 
 {
-  "registerId": 3,
-  "username": ",jbu",
-  "checkInTime": "2023-09-25T12:00:00"
+  "selectedRegisterName": "Maths",
+  "username": "lerato",
+  "checkInDate":"2023/10/02"
+}
+
+###
+POST http://localhost:3011/api/registerNames/
+content-type: application/json
+
+{
+  "username":"xolani"
 }

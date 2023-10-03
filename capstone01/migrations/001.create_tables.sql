@@ -46,17 +46,19 @@ CREATE TABLE if not exists admin (
 -- Create the attendance table
 CREATE TABLE if not exists attendance(
     attendanceId INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
-    registerId INTEGER NOT NULL,
     userId INTEGER NOT NULL,
+    registerId INTEGER NOT NULL,
+    registerName VARCHAR(255) NOT NULL,
     attendeeId INTEGER NOT NULL,
+    attendee VARCHAR(255) NOT NULL,
     checkInTime TIMESTAMP NOT NULL,
     checkInDate TIMESTAMP NOT NULL,
-    FOREIGN KEY (attendeeId) REFERENCES attendee (attendeeId),
-    FOREIGN KEY (username) REFERENCES attendee (username),
+    FOREIGN KEY (attendeeId) REFERENCES attendee (attendeeId)
     FOREIGN KEY (userId) REFERENCES user (id)
     FOREIGN KEY (registerId) REFERENCES register (registerId)
 );
+
+
 
 <<<<<<< HEAD
 -- drop table register

@@ -51,3 +51,10 @@
 -- SELECT registerName FROM register WHERE registerId =1
 
 -- delete from attendance;
+
+SELECT registerId,attendanceId,firstname,surname,email,phoneNumber,checkInTime,checkInDate FROM user join attendance on attendance.userId=user.id WHERE registerId =4 ORDER BY attendanceId DESC;
+
+select * from register where attendee="lerato" and registerName="Maths";
+
+
+

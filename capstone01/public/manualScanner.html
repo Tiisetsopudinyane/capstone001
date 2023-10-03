@@ -18,9 +18,26 @@
   <body class="manualAttendance" x-data="Attendance">
     <div class="wrapper">
       <h6 x-text="`Welcome! ${displayName}`"><h6>
+        <div class="select-input-box">
+          <label>Select Register Name:</label>
+          <!-- Use x-for to dynamically create attendee options -->
+          <template x-for="register in registeredList" :key="register.registerId">
+            <div class="option">
+              <label :for="'register' + register.registerId" x-html="register.registerName"></label>
+<input
+  type="radio"
+  x-model="selectedRegisterName"
+  name="register[]"
+  :value="register.registerName"
+  :id="'register' + register.registerId"
+  required
+/>
+
+            </div>
+          </template>
+        </div>
       <h4>ENTER YOUR USERNAME TO TAKE MANUAL ATTENDANCE</h4>
     <form class="input-box">
-      
       <label for="username">Username:</label>
       <input 
         type="text"

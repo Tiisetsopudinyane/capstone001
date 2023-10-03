@@ -9,11 +9,13 @@ document.addEventListener('alpine:init', () => {
 			username:'',
 			password:'',
 			confirmPassword:'',
+			selectedRegisterName:'',
 			userType:'',
 			phoneNumber:'',
 			searchUser:'',
 			manualAttendanceUsername:'',
 			emailValid: true,
+			registeredList:[],
 			attendeeList: [],
 			selectedAttendees: [],
 			registerList:'',
@@ -37,10 +39,14 @@ document.addEventListener('alpine:init', () => {
 						console.error("No attendees found or error occurred.");
 					}
 				});
-
-				//Get Register
 				const storedUsername = localStorage.getItem("username");
 				this.attendanceName=localStorage.getItem('attendanceName');
+
+				//get list of registered Names under this username
+				this.getRegisterNames(storedUsername);
+                
+				//Get Register
+				
 				axios.post("/api/getRegisters/", {
 					storedUsername: storedUsername
 			    }).then((result) => {
@@ -65,7 +71,16 @@ document.addEventListener('alpine:init', () => {
 				});
                 
 			},
-			
+			//get list of registerNames
+			getRegisterNames(storedUsername){
+				axios.post('/api/registerNames/',{
+					username:storedUsername
+			   }).then((result)=>{
+				   console.log(result.data.registerName)
+				   console.log(storedUsername)
+				   this.registeredList=result.data.registerName
+			   })
+			},
 			validateEmail() {
 				const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 				this.emailValid = emailPattern.test(this.email);
@@ -157,7 +172,6 @@ document.addEventListener('alpine:init', () => {
 					registerName : this.registerName,
 					storedUsername : storedUsername
 				}).then((result)=>{
-					if(result.data.userType==="admin"){
 						if(result.data.success){
 							this.selectedAttendees=[];
 							this.registerName=''; 
@@ -167,11 +181,8 @@ document.addEventListener('alpine:init', () => {
 							this.registerName='';
 							alert(result.data.error);
 						}
-					}
-					else{
-						alert("Attendee is not permitted to create register")
-					}
-					
+						this.registerName=''
+						this.selectedAttendees=[]
 				})
 			},
 
@@ -281,15 +292,22 @@ document.addEventListener('alpine:init', () => {
 			// 
 			submitManualAttendance(event) {
 				event.preventDefault();
+				 //TODO 
+				 //
+				 //if attendee registered must submit attandance once for that selected register
+				 //attendee cannot sumbit attendance for other user
+				 //admin cannot submit attendance
+				 //selectedRegisterName
+				 console.log("selected "+this.selectedRegisterName)
 				 
 				 const username=localStorage.getItem('username')
 				 if(username===this.manualAttendanceUsername){
-					console.log("type " +this.savedUserType)
 				     if(this.savedUserType!="admin"){
 					axios
 					.post("/api/addAttendance/", {
 					  //attendanceId: this.attendanceList[0].attendanceId,
 					  username: this.manualAttendanceUsername,
+					  selectedRegisterName:this.selectedRegisterName
 					})
 					.then((result) => {
 						localStorage.setItem('attendees',result.data.attendees)
@@ -298,16 +316,16 @@ document.addEventListener('alpine:init', () => {
 						this.id=localStorage.getItem('registerId')
 						this.manualAttendanceUsername='';
 						this.attendanceList=localStorage.getItem('attendees')
-						
+						this.getRegisterNames(storedUsername);
 						window.location.href = './attendanceList.html';
 					  }
 					  else{
-						  alert(result.data.allertMessage)
+						  alert(result.data.error)
 						  this.attendanceList=localStorage.getItem('attendees')
 						  this.manualAttendanceUsername=""
 						  window.location.href = './attendanceList.html';
 					  }
-					  console.log(this.attendanceList)
+					  
 				  })
 				}
 				else{
