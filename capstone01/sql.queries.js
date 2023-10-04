@@ -135,9 +135,9 @@ export async function selectByattendeeNameFromUser(username){
         return await db.all(sql,username);  
 }
 
-export async function selectAllFromUserAndAttendanceById(attendeeId){
-    const sql='SELECT * FROM user join attendance on attendance.userId=user.id WHERE attendeeId =20 ORDER BY attendanceId DESC;'
-    await db.all(sql,attendeeId)
+export async function selectAllFromUserAndAttendanceById(registerId,username){
+    const sql='SELECT * FROM user join attendance on attendance.userId=user.id WHERE registerId =? and username=? ORDER BY attendanceId DESC;'
+    return await db.get(sql,[registerId,username])
 }
 
 //api/viewRegisterName

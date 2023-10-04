@@ -61,7 +61,8 @@ POST http://localhost:3011/api/deleteRegister/
 content-type: application/json
 
 {
-  "registerId" : "9"
+  "registerId" : "1",
+  "username":"sam1"
 }
 
 ### View attendance

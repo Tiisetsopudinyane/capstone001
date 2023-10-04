@@ -33,6 +33,7 @@ import {
   selectByAttendanceIdFromRegister,
   selectuserTypeFromUser,
   selectByUsernameFromAttendee,
+  selectAllFromUserAndAttendanceById,
   insertIntoAttendance,
   selectDateFromAttendee,
 } from "./sql.queries.js";
@@ -173,7 +174,8 @@ app.post("/api/submitRegister/", async (req, res) => {
     }else if(userType.userType==="attendee"){
 
       res.json({
-        error:"Attendee is not permitted to create register"
+        error:"Attendee is not permitted to create register",
+        message:"attendee"
       })
     }
     else {
@@ -235,14 +237,31 @@ app.post("/api/getRegisters/", async (req, res) => {
 //Delete register
 app.post("/api/deleteRegister/", async (req, res) => {
   const registerId = req.body.registerId;
+  const username=req.body.username;
+  
   const register = await selectByRegisterIdFromRegister(registerId);
+  const userInfor=await selectAllFromUserAndAttendanceById(registerId,username)
 
   if (register) {
-    await deleteByRegisterIdFromRegister(registerId);
+   if(userInfor){
+    ///
+    ///if is Admin delete the register or else trigger error message to Attendee
+    ///
+    if(userInfor.userType==="admin"){
+      await deleteByRegisterIdFromRegister(registerId);
     res.json({
       success: true,
     });
-  } else {
+  }
+    else {
+      res.json({
+        error: "Attendee cannot delete any Register!",
+      });
+   }
+   
+  }
+  } 
+  else {
     res.json({
       error: "Register does not exist!",
     });

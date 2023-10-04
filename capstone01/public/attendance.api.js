@@ -186,8 +186,15 @@ document.addEventListener('alpine:init', () => {
 							alert("Register has been created, successfully!")
 							window.location.href = './registerLists.html';  	 
 						}else if(result.data.error){
-							this.registerName='';
-							alert(result.data.error);
+							if(result.data.message==="attendee"){
+								this.registerName='';
+								alert(result.data.error);
+								window.location.href = './registerLists.html';
+							}
+							else{
+								this.registerName='';
+								alert(result.data.error);
+							}
 						}
 						this.registerName=''
 						this.selectedAttendees=[]
@@ -197,6 +204,7 @@ document.addEventListener('alpine:init', () => {
 			deleteRegister(registerId){
 				axios.post("/api/deleteRegister/", {
 					registerId : registerId,
+					username:this.displayName
 				}).then((result)=>{
 					if(result.data.success){
 						window.location.href = './registerLists.html';  	 
@@ -303,8 +311,6 @@ document.addEventListener('alpine:init', () => {
 			// 
 			submitManualAttendance(event) {
 				event.preventDefault();
-				 //TODO 
-				 //
 				 //if attendee registered must submit attandance once for that selected register
 				 //attendee cannot sumbit attendance for other user
 				 //admin cannot submit attendance
@@ -348,33 +354,6 @@ document.addEventListener('alpine:init', () => {
 					this.manualAttendanceUsername='';
 					alert("you cant register attendance for other user or if you are admin")
 				 }
-				// 	  axios.post("/api/viewRegister/", {
-						
-				// 	  registerId: registerId,
-				// 	  })
-				// 	  .then((viewResult) => {
-				// 		if (viewResult.data.success) {
-				// 		  // Update the attendanceList directly
-				// 		  this.attendanceList = viewResult.data.attendance;
-				// 		  this.attendanceName=viewResult.data.registerName;
-				// 		} else {
-				// 		  alert(viewResult.data.error);
-				// 		}
-				// 	  })
-				// 	  .catch((error) => {
-				// 		console.error("An error occurred:", error);
-				// 	  });
-					  
-				// 	} else {
-				// 	  alert(result.data.error);
-				// 	};
-				//     this.manualAttendanceUsername ='';
-				//   })
-				//   .catch((error) => {
-				// 	// Handle the error here, e.g., show a user-friendly error message.
-				// 	console.error("An error occurred:", error);
-				// 	alert("An error occurred while submitting attendance.");
-				//   });
 			  },
 			  
 		}
