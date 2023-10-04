@@ -5,7 +5,7 @@ import {selectUser,insertUser,selectByusernameFromUser,insertAdmin,insertAttende
     selectByUsernameAndPasswordFromUser,selectAtendees,selectAllByRegisterNameFromRegister,selectIdByUserNameFromAttendee,
     selectMaximumRegistrationId,insertIntoRegister,selectByAdminNameFromRegister,selectByRegisterIdFromRegister,
     deleteByRegisterIdFromRegister,selectByRegisterFromRegister,selectByattendeeIdFromUser,
-    selectByattendeeNameFromUser,selectByAttendanceIdFromRegister,selectByUsernameFromAttendee,insertIntoAttendee} from '../sql.queries.js'
+    selectByattendeeNameFromUser,insertIntoAttendance,selectByAttendanceIdFromRegister,selectByUsernameFromAttendee} from '../sql.queries.js'
   import {dateGenerater,timeGenerater} from '../dateTimeGenerator.js'
   
 
@@ -17,67 +17,69 @@ const  db = await sqlite.open({
 
 await db.migrate();
 
-it ('should return object of three values', async function() {
+it ('(1)=> should return object of three values', async function() {
 
     //await selectUser(username,email,phoneNumber)
-    const obj={username:"malva",email:"malva@gmail.com",phoneNumber:2767253780}
+    const obj={
+      id: 34,
+      firstName: 'Samuel',
+      surname: 'Pudinyane',
+      email: 'tiisetso@gmail.com',
+      phoneNumber: 27671876780,
+      username: 'sam',
+      password: '1234',
+      userType: 'admin'
+    }
 
-    assert.deepEqual(obj,await selectUser("malva","malva@gmail.com",2767253780));
+    assert.deepEqual(obj,await selectUser("sam","tiisetso@gmail.com"));
 
 });
 
 
 
-it ('should return object of property id', async function() {
+it ('(2)=> should return object of property id', async function() {
 
     //selectByusernameFromUser(username)
     
-    const obj={id:23}
+    const obj={id:34}
 
-    assert.deepEqual(obj,await selectByusernameFromUser("malva"));
+    assert.deepEqual(obj,await selectByusernameFromUser("sam"));
 
 });
 
 
 
-it ('should return object', async function() {
+it ('(3)=> should return object', async function() {
 
     //selectByUsernameAndPasswordFromUser(username,password)
     
-    const obj={id:22,firstName:"Samuel",surname:"Pudinyane",email:"pudinyanesamueltiisetso@gmail.com",phoneNumber:27671563780,username:"user",password:1234,userType:"admin"}
+    const obj={  id: 34,
+      firstName: 'Samuel',
+      surname: 'Pudinyane',
+      email: 'tiisetso@gmail.com',
+      phoneNumber: 27671876780,
+      username: 'sam',
+      password: '1234',
+      userType: 'admin'
+    }
 
-    assert.deepEqual(obj,await selectByUsernameAndPasswordFromUser("user",1234));
+    assert.deepEqual(obj,await selectByUsernameAndPasswordFromUser("sam",1234));
 
 });
 
 
 
-it ('should return array of objects', async function() {
+it ('(4)=> should return array of objects', async function() {
 
     //selectAtendees()
     
     const obj=[
-        { attendeeId: 20, userId: 23, username: 'malva' },   
-        { attendeeId: 19, userId: 21, username: 'sammy' },   
-        { attendeeId: 18, userId: 20, username: '' },        
-        { attendeeId: 17, userId: 19, username: 'lerato' },  
-        { attendeeId: 16, userId: 17, username: 'sabeehah' },
-        { attendeeId: 15, userId: 15, username: 'ethan_a' }, 
-        { attendeeId: 14, userId: 14, username: 'ava_l' },
-        { attendeeId: 13, userId: 13, username: 'james_h' },
-        { attendeeId: 12, userId: 12, username: 'olivia_g' },
-        { attendeeId: 11, userId: 11, username: 'william_m' },
-        { attendeeId: 10, userId: 10, username: 'sophia_a' },
-        { attendeeId: 9, userId: 9, username: 'robert_w' },
-        { attendeeId: 8, userId: 8, username: 'linda_c' },
-        { attendeeId: 7, userId: 7, username: 'michael_d' },
-        { attendeeId: 6, userId: 6, username: 'emily_b' },
-        { attendeeId: 5, userId: 5, username: 'david_lee' },
-        { attendeeId: 4, userId: 4, username: 'sarah_w' },
-        { attendeeId: 3, userId: 3, username: 'mike_j' },
-        { attendeeId: 2, userId: 2, username: 'jane_smith' },
-        { attendeeId: 1, userId: 1, username: 'john_doe1' }
-      ]
+      { attendeeId: 5, registerId: 1, userId: 38, username: 'xolani' },
+      { attendeeId: 4, registerId: 1, userId: 37, username: 'lerato' },
+      { attendeeId: 3, registerId: 1, userId: 35, username: 'sam1' },
+      { attendeeId: 2, registerId: 1, userId: 33, username: 'pudding' },
+      { attendeeId: 1, registerId: 1, userId: 32, username: 'sam' }
+    ]
 
     assert.deepEqual(obj,await selectAtendees());
 
@@ -85,41 +87,55 @@ it ('should return array of objects', async function() {
 
 
 
-it ('should return array of objects', async function() {
+it ('(5)=> should return array of objects', async function() {
 
     //selectAllByRegisterNameFromRegister(registerName)
     
     const obj=[
-        {registerId: 11,attendanceId: 20,registerName: 'Maths',attendee: 'malva',adminName: 'user'},
-        {registerId: 11,attendanceId: 19,registerName: 'Maths',attendee: 'sammy',adminName: 'user'},
-        {registerId: 11,attendanceId: 11,registerName: 'Maths',attendee: 'william_m',adminName: 'user'},
-        {registerId: 11,attendanceId: 1,registerName: 'Maths',attendee: 'john_doe1',adminName: 'user'},
-        {registerId: 11,attendanceId: 14,registerName: 'Maths',attendee: 'ava_l',adminName: 'user'},
-        {registerId: 11,attendanceId: 17,registerName: 'Maths',attendee: 'lerato',adminName: 'user'},
-        {registerId: 11,attendanceId: 3,registerName: 'Maths',attendee: 'mike_j',adminName: 'user'}
-      ]
+      {
+        registerId: 1,
+        attendanceId: 5,
+        registerName: 'Maths',
+        attendee: 'xolani',
+        adminName: 'sam1'
+      },
+      {
+        registerId: 1,
+        attendanceId: 4,
+        registerName: 'Maths',
+        attendee: 'lerato',
+        adminName: 'sam1'
+      },
+      {
+        registerId: 1,
+        attendanceId: 3,
+        registerName: 'Maths',
+        attendee: 'sam1',
+        adminName: 'sam1'
+      }
+    ]
 
     assert.deepEqual(obj,await selectAllByRegisterNameFromRegister("Maths"));
 
 });
 
 
-it ('should return object', async function() {
+it ('(6)=> should return object', async function() {
 
     //selectIdByUserNameFromAttendee(username)
     
-    const obj={ attendeeId: 19 }
+    const obj={ attendeeId: 4 }
 
-    assert.deepEqual(obj,await selectIdByUserNameFromAttendee("sammy"));
+    assert.deepEqual(obj,await selectIdByUserNameFromAttendee("lerato"));
 
 });
 
 
-it ('should return object of maximum registerId', async function() {
+it ('(7)=> should return object of maximum registerId', async function() {
 
     //selectMaximumRegistrationId()
     
-    const obj={ maxRegisterId: 11 }
+    const obj={ maxRegisterId: 9 }
 
     assert.deepEqual(obj,await selectMaximumRegistrationId());
 
@@ -127,72 +143,129 @@ it ('should return object of maximum registerId', async function() {
 
 
 
-it ('should return object of registerId and registerName', async function() {
+it ('(8)=> should return object of registerId and registerName', async function() {
 
     //selectByAdminNameFromRegister("user")
     
     const obj=[
-        { registerId: 11, registerName: 'Maths' },      
-        { registerId: 10, registerName: 'mathematics' },
-        { registerId: 9, registerName: 'Register 9' },  
-        { registerId: 9, registerName: 'Register 12' }, 
-        { registerId: 8, registerName: 'Register 8' },  
-        { registerId: 8, registerName: 'Register 13' }, 
-        { registerId: 7, registerName: 'Register 7' },  
-        { registerId: 6, registerName: 'Register 6' },  
-        { registerId: 5, registerName: 'Register 5' },
-        { registerId: 4, registerName: 'Register 4' },
-        { registerId: 3, registerName: 'Register 3' },
-        { registerId: 3, registerName: 'Register 17' },
-        { registerId: 3, registerName: 'Register 18' },
-        { registerId: 3, registerName: 'Register 19' },
-        { registerId: 3, registerName: 'Register 20' },
-        { registerId: 3, registerName: 'Register 21' },
-        { registerId: 2, registerName: 'Register 15' },
-        { registerId: 2, registerName: 'Register 16' },
-        { registerId: 1, registerName: 'Register 14' }
-      ]
+      { registerId: 9, registerName: 'Setswana' },
+      { registerId: 8, registerName: 'Science' }
+    ]
 
-    assert.deepEqual(obj,await selectByAdminNameFromRegister("user"));
+    assert.deepEqual(obj,await selectByAdminNameFromRegister("sam"));
 
 });
 
 
-it ('should return object of register ', async function() {
+it ('(9)=> should return object of register ', async function() {
 
     //selectByRegisterIdFromRegister(registerId)
     
-    const obj={
-        registerId: 11,
-        attendanceId: 20,
-        registerName: 'Maths',
-        attendee: 'malva',
-        adminName: 'user'
+    const obj=[
+      {
+        registerId: 9,
+        attendanceId: 5,
+        registerName: 'Setswana',
+        attendee: 'xolani',
+        adminName: 'sam'
+      },
+      {
+        registerId: 9,
+        attendanceId: 4,
+        registerName: 'Setswana',
+        attendee: 'lerato',
+        adminName: 'sam'
+      },
+      {
+        registerId: 9,
+        attendanceId: 1,
+        registerName: 'Setswana',
+        attendee: 'sam',
+        adminName: 'sam'
+      },
+      {
+        registerId: 9,
+        attendanceId: 2,
+        registerName: 'Setswana',
+        attendee: 'pudding',
+        adminName: 'sam'
       }
+    ]
 
-    assert.deepEqual(obj,await selectByRegisterIdFromRegister(11));
+    assert.deepEqual(obj,await selectByRegisterIdFromRegister(9));
 
 });
 
 
 
-it ('should return object of attendance ', async function() {
+it ('(10)=> should return object of attendance ', async function() {
 
     //selectByattendeeIdFromUser(attendeeId)
     
     const obj=[
-        {
-          attendanceId: 14,
-          firstName: 'malva',
-          surname: 'Pudding',
-          email: 'malva@gmail.com',
-          phoneNumber: 2767253780,
-          checkInTime: '08:45:00',
-          checkInDate: '2023-09-23'
-        }
-      ]
+      {
+        registerId: 9,
+        attendanceId: 11,
+        firstName: 'lerato',
+        surname: 'malebo',
+        email: 'malebo@gmail.com',
+        phoneNumber: 736746376,
+        checkInTime: '09:54:42',
+        checkInDate: '2023/10/04'
+      },
+      {
+        registerId: 8,
+        attendanceId: 10,
+        firstName: 'lerato',
+        surname: 'malebo',
+        email: 'malebo@gmail.com',
+        phoneNumber: 736746376,
+        checkInTime: '09:22:05',
+        checkInDate: '2023/10/04'
+      },
+      {
+        registerId: 1,
+        attendanceId: 9,
+        firstName: 'lerato',
+        surname: 'malebo',
+        email: 'malebo@gmail.com',
+        phoneNumber: 736746376,
+        checkInTime: '09:08:17',
+        checkInDate: '2023/10/04'
+      },
+      {
+        registerId: 1,
+        attendanceId: 8,
+        firstName: 'lerato',
+        surname: 'malebo',
+        email: 'malebo@gmail.com',
+        phoneNumber: 736746376,
+        checkInTime: '09:06:28',
+        checkInDate: '2023/10/04'
+      },
+      {
+        registerId: 1,
+        attendanceId: 7,
+        firstName: 'lerato',
+        surname: 'malebo',
+        email: 'malebo@gmail.com',
+        phoneNumber: 736746376,
+        checkInTime: '09:06:00',
+        checkInDate: '2023/10/04'
+      },
+      {
+        registerId: 1,
+        attendanceId: 4,
+        firstName: 'lerato',
+        surname: 'malebo',
+        email: 'malebo@gmail.com',
+        phoneNumber: 736746376,
+        checkInTime: '14:29:15',
+        checkInDate: '2023/10/02'
+      }
+    ]
 
-    assert.deepEqual(obj,await selectByattendeeIdFromUser(20));
+    assert.deepEqual(obj,await selectByattendeeIdFromUser(4));
 
 });
 

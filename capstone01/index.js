@@ -1,9 +1,9 @@
 import express from "express";
 import cors from "cors";
 import {
-  selectUser,
   insertUser,
-  selectUsername,
+  selectUser,
+  insertIntoAttendance,
   selectUserwithEmail,
   selectUserwithUsername,
   selectByusernameFromUser,
@@ -21,7 +21,6 @@ import {
   selectIdByUserNameFromAttendee,
   selectMaximumRegistrationId,
   insertIntoRegister,
-  selectAllWithRegisterNameOfFromattendee,
   selectByAdminNameFromRegister,
   selectByRegisterIdFromRegister,
   deleteByRegisterIdFromRegister,
@@ -32,9 +31,7 @@ import {
   selectRegisterNamesByUsernameFromRegister,
   selectByAttendanceIdFromRegister,
   selectuserTypeFromUser,
-  selectByUsernameFromAttendee,
   selectAllFromUserAndAttendanceById,
-  insertIntoAttendance,
   selectDateFromAttendee,
 } from "./sql.queries.js";
 import {myCipher,myDecipher} from './encryption.js'
@@ -462,7 +459,7 @@ else{
 });
 
 
-
+console.log(await selectByRegisterIdFromRegister(9))
 
 
 

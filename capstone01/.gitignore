@@ -1,5 +1,3 @@
 node_modules/
 attendance.db
 model/
-.model/
-.api/

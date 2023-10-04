@@ -11,7 +11,7 @@ await db.migrate();
 
 //api/addUser/ end-point
 export async function selectUser(username,email){
-    const sql="select username,email from user where username = ? and email=?";
+    const sql="select * from user where username = ? and email=?";
     return await db.get(sql,[username,email]);
 }
 export async function selectUserwithUsername(username){
@@ -107,7 +107,7 @@ export async function selectByAdminNameFromRegister(adminName){
 //api/deleteRegister
 export async function selectByRegisterIdFromRegister(registerId){
     const sql="SELECT * FROM register WHERE registerId = ?;";
-    return await db.get(sql,registerId);
+    return await db.all(sql,registerId);
 }
 export async function deleteByRegisterIdFromRegister(registerId){
     const sql="DELETE FROM register WHERE registerId = ? ;";
