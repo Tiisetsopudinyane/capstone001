@@ -21,7 +21,7 @@
       <h2>List of Registers</h2>
       <div class="registerList-box">
         <!-- Use x-for to dynamically create register list options -->
-        <template x-for="(register, index) in registerList" :key="index">
+        <template x-for="(register, index) in registeredList" :key="index">
           <div class="register-item">
             <button @click="viewRegister(register.registerId)" class="view-btn">
               View Register

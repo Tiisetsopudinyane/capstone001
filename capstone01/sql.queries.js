@@ -130,9 +130,9 @@ export async function selectAllWithRegisterNameOfFromattendee(registerId){
 }
 
 //api/viewSpecificRegister
-export async function selectByattendeeNameFromUser(surname){
-        const sql="SELECT firstname,surname,email,phoneNumber,registerName,checkInTime,checkInDate FROM user join attendance on attendance.userId=user.id WHERE surname = ?  ORDER BY attendanceId DESC;"
-        return await db.all(sql,surname);  
+export async function selectByattendeeNameFromUser(username){
+        const sql="SELECT registerId,firstname,surname,email,username,phoneNumber,registerName,checkInTime,checkInDate FROM user join attendance on attendance.userId=user.id WHERE username = ?  ORDER BY attendanceId DESC;"
+        return await db.all(sql,username);  
 }
 
 export async function selectAllFromUserAndAttendanceById(attendeeId){
@@ -146,6 +146,11 @@ export async function selectByAttendanceIdFromRegister(maxRegisterId){
     return await db.get(sql, maxRegisterId);
 }
 
+export async function selectuserTypeFromUser(username){
+    const sql="select registerId,username,userType,attendee from user join register on user.username=register.attendee where username=?";
+    return await db.get(sql,username)
+}
+
 //api/addAttendance
 export async function selectByUsernameFromAttendee(username){
     const sql="SELECT * FROM attendee WHERE attendee=?";
@@ -157,7 +162,7 @@ export async function insertIntoAttendance(userId,registerId,registerName,attend
 }
 
 export async function selectDateFromAttendee(username,selectedRegisterName){
-    const sql="select * from attendance where attendee=? and registerName=?";
+    const sql="select * from attendance where attendee=? and registerName=? ORDER BY attendanceId DESC";
     return await db.get(sql,[username,selectedRegisterName])
 }  
 

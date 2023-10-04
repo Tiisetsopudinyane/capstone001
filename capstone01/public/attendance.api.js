@@ -28,6 +28,7 @@ document.addEventListener('alpine:init', () => {
 			i:[],
 
 			init(){
+				this.id=localStorage.getItem('id')
 				// Get Attendance
 				axios.get("/api/getAttendees/").then((result) => {
 					if (result.data.success) {
@@ -61,24 +62,31 @@ document.addEventListener('alpine:init', () => {
 				//Get specific register name
 				
 				this.attendanceList = JSON.parse(localStorage.getItem('attendanceList'));
-				console.log(this.attendanceList[0].attendanceId)
 				axios.post("/api/viewRegisterName/", {
-					attendanceId : this.attendanceList[0].attendanceId,
+					registerId : this.id,
+					username:storedUsername
 				}).then((result)=>{
 					if(result.data.success){
-						this.attendanceName = result.data.registerName;
+					const type=result.data.list
+					if(type.userType=="admin"){
+						this.attendanceName =`Attendance for ${result.data.registerName}`;
+					}
+					else{
+						this.attendanceName="Attendance"
+					}
+
 					}
 				});
                 
 			},
 			//get list of registerNames
-			getRegisterNames(storedUsername){
+			getRegisterNames(displayName){
 				axios.post('/api/registerNames/',{
-					username:storedUsername
+					username:displayName
 			   }).then((result)=>{
-				   console.log(result.data.registerName)
-				   console.log(storedUsername)
+				
 				   this.registeredList=result.data.registerName
+				   console.log(this.registeredList)
 			   })
 			},
 			validateEmail() {
@@ -200,17 +208,20 @@ document.addEventListener('alpine:init', () => {
 
 			viewRegister(registerId) {
 				localStorage.setItem('id',registerId)
-				this.id=localStorage.getItem('id')
+				
 				axios.post("/api/viewRegister/", {
-				  registerId: registerId,
+				  registerId: this.id,
 				}).then((result) => {
 				  if (result.data.success) {
+			        
 					// Save attendanceList to localStorage
 					localStorage.setItem('attendanceList', JSON.stringify(result.data.attendance));
 					this.attendanceList=localStorage.getItem('attendanceList');
 				    localStorage.setItem('registerName',result.data.registerName)
 				    this.attendanceName=localStorage.getItem('registerName')
+					console.log(this.attendanceName)
 					window.location.href = './attendanceList.html';
+					
 				  } else {
 					alert(result.data.error);
 				  }
@@ -298,14 +309,12 @@ document.addEventListener('alpine:init', () => {
 				 //attendee cannot sumbit attendance for other user
 				 //admin cannot submit attendance
 				 //selectedRegisterName
-				 console.log("selected "+this.selectedRegisterName)
 				 
 				 const username=localStorage.getItem('username')
 				 if(username===this.manualAttendanceUsername){
 				     if(this.savedUserType!="admin"){
 					axios
 					.post("/api/addAttendance/", {
-					  //attendanceId: this.attendanceList[0].attendanceId,
 					  username: this.manualAttendanceUsername,
 					  selectedRegisterName:this.selectedRegisterName
 					})
@@ -323,6 +332,7 @@ document.addEventListener('alpine:init', () => {
 						  alert(result.data.error)
 						  this.attendanceList=localStorage.getItem('attendees')
 						  this.manualAttendanceUsername=""
+						  this.getRegisterNames(storedUsername);
 						  window.location.href = './attendanceList.html';
 					  }
 					  

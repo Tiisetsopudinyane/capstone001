@@ -31,10 +31,12 @@ import {
   selectByUsernameFromRegister,
   selectRegisterNamesByUsernameFromRegister,
   selectByAttendanceIdFromRegister,
+  selectuserTypeFromUser,
   selectByUsernameFromAttendee,
   insertIntoAttendance,
   selectDateFromAttendee,
 } from "./sql.queries.js";
+import {myCipher,myDecipher} from './encryption.js'
 import { dateGenerater, timeGenerater } from "./dateTimeGenerator.js";
 
 //express initialization
@@ -186,8 +188,9 @@ app.post("/api/submitRegister/", async (req, res) => {
       for (let i = 0; i < selectedAttendees.length; i++) {
         let value = selectedAttendees[i];
         let id = attendeeId[i].attendeeId;
-        //if userType exist
-        //console.log(userType)
+        //
+        //if userType exist isert the following to database
+        //
         if(userType){
             await insertIntoRegister(
               newRegistrationId,
@@ -195,12 +198,9 @@ app.post("/api/submitRegister/", async (req, res) => {
               registerName,
               value,
               storedUsername
-            );
-           
+            );  
         }
-
       }
-  
       res.json({
         userType:userType.userType,
         success: "Register creation successful!",
@@ -211,10 +211,9 @@ app.post("/api/submitRegister/", async (req, res) => {
 
 // Get list of registers
 app.post("/api/getRegisters/", async (req, res) => {
+  const storedUsername=req.body.storedUsername
   try {
-    const registers = await selectByAdminNameFromRegister(
-      req.body.storedUsername
-    );
+    const registers = await selectByAdminNameFromRegister(storedUsername);
     if (registers.length > 0) {
       res.json({
         success: true,
@@ -255,7 +254,7 @@ app.post("/api/deleteRegister/", async (req, res) => {
 app.post("/api/viewRegister/", async (req, res) => {
   const registerId = req.body.registerId;
 
-  
+  console.log(registerId)
   let registerName = "";
   const register = await selectByRegisterFromRegister(registerId);
   console.log(register)
@@ -290,9 +289,8 @@ app.post("/api/viewRegister/", async (req, res) => {
 
 //Get specifc register
 app.post("/api/viewSpecificRegister/", async (req, res) => {
-  const attendeeName = req.body.attendeeName;
-
-  const attendance = await selectByattendeeNameFromUser(attendeeName);
+  const username = req.body.username;
+  const attendance = await selectByattendeeNameFromUser(username);
   if (attendance.length > 0) {
     res.json({
       success: true,
@@ -308,16 +306,28 @@ app.post("/api/viewSpecificRegister/", async (req, res) => {
 
 //view register name
 app.post("/api/viewRegisterName/", async (req, res) => {
-  const attendanceId = req.body.attendanceId;
-
-  //KEATLA
-  const registerName = await selectByAttendanceIdFromRegister(attendanceId);
-
+  const username = req.body.username;
+  const registerId = req.body.registerId;
+  const list=await selectuserTypeFromUser(username);
+  ///
+  ///
+  ///
+  const registerName = await selectByAttendanceIdFromRegister(registerId);
+  
   if (registerName) {
-    res.json({
-      success: true,
-      registerName: registerName.registerName,
-    });
+    if(list){
+      res.json({
+        success: true,
+        registerName: registerName.registerName,
+        list:list
+      });
+    }
+    else{
+      res.json({
+        success: true,
+        registerName: registerName.registerName,
+      });
+    }
   } else {
     res.json({
       // Use a 404 status code for "Not Found"
@@ -331,22 +341,10 @@ app.post("/api/registerNames/",async (req,res)=>{
   const username=req.body.username;
   //get a list of registers under this username 
   const attendee = await selectRegisterNamesByUsernameFromRegister(username);
-  console.log(attendee)
 
   if(attendee){
-    const registerNames=[]
-  for(let i=0;i<attendee.length;i++){
-    //if registerName is null continue without doing anything
-    if(attendee[i].registerName==""){
-      continue;
-    }
-    else{
-      registerNames.push(attendee[i])
-      
-    }
-  }console.log(registerNames)
     res.json({
-      registerName:registerNames
+      registerName:attendee
     })
   }
   else{
@@ -359,25 +357,22 @@ app.post("/api/registerNames/",async (req,res)=>{
 
 //Add Attendance
 app.post("/api/addAttendance/", async (req, res) => {
-  //const attendanceId = req.body.attendanceId;
   const username = req.body.username;
   const selectedRegisterName=req.body.selectedRegisterName;
-  //const checkInDate=req.body.checkInDate;
-  //generate currrnt time and date
+  
+  //generate current time and date
   const checkInDate = dateGenerater();
   const checkInTime = timeGenerater();
   //get all row from attendance with username and checkInDate
   const results = await selectDateFromAttendee(username, selectedRegisterName);
   //serch registerName
   const attendee = await selectByUsernameFromRegister(username,selectedRegisterName);
-  const output=await selectAllByattendeeIdFromUser(attendee[0].registerId)
-    //console.log(output)
+  const output=await selectAllByattendeeIdFromUser(attendee.registerId)
   if(attendee && attendee.length!=0){
     //
     //if selected Register Name and username are not in the database
-    //do the following
+    //do the following, porpulate the database
     // 
-    
     if(!results){
 
         const userInfo=await selectUserByName(username);
@@ -404,84 +399,52 @@ app.post("/api/addAttendance/", async (req, res) => {
           }
              
     } else{
-      res.json({
-        error:"Attendance has been submited for this Register "
-      })
+      //
+      //loop around the attendance to check the date
+      //and allow the user to submit attendance for another day
+      //
+      if(results.checkInDate!= checkInDate){
+        
+        const userInfo=await selectUserByName(username);
+        const attendeeInfo =await selectAttendeeIdFromAttendeeByUserId(userInfo.id)
+        
+         if(attendeeInfo){
+            await insertIntoAttendance(
+              userInfo.id,
+              attendee[0].registerId,
+              attendee[0].registerName,
+              attendeeInfo.attendeeId,
+              attendee[0].attendee,
+              checkInTime,
+              checkInDate
+            );
+            res.json({
+              attendee:attendee[0],
+              userInfo:userInfo,
+              success: true,
+              attendees:attendee,
+              output:output,
+              message: "Attendance added successfully.",
+            })
+          }    
+          }
+          else{
+            res.json({
+              error:"Attendance has been submited for this Register "
+            })
+          } 
   }
-  }
-  else{
-    res.json({
-      error:"You are not registered to this Register Name"
-    })
-  }
-  
-  // const attendeeName=""
-  // const registerName=""
-  // const registerNames=[]
-
-  // if(attendee){
-  //   attendeeName=attendee.attendee
-  //   registerName=attendee.registerName
-  //   registerNames.push(attendee.registerName)
-  // }
-  // // Check if both username and attendeeId exist
-   
-  
-   
-  
-  // else {
-  //   //if the user hasnt submited attendance yet else return message
-  //   if (!results) {
-  //     //userId,username,registerId,registerName,attendeeId,attendee, checkInTime,checkInDate
-  //     //insert into table if you have not taken the attendance for this register
-  //     //
-  //     //before taking attendance you must be registered to a register
-  //     //
-
-  //     if(!results.registerName){
-  //       await insertIntoAttendance(
-  //         usernameRow.userId,
-  //         usernameRow.username,
-  //         usernameRow.registerId,
-  //         registerName,
-  //         usernameRow.attendeeId,
-  //         attendeeName,
-  //         checkInTime,
-  //         checkInDate
-  //       );
-  //       res.json({
-  //         success: true,
-  //         attendees:attendees,
-  //         message: "Attendance added successfully.",
-  //       });
-  //     }
-  //     else{
-  //       res.json({
-  //         allertMessage: `you have taken attendance for ${results.registerName} register at ${results.checkInTime}`,
-  //         attendees:attendees[0]
-  //       });
-  //     }
-  //    } 
-
-  //   }
-    //Stop here
-    //else {
-    //   //TODO
-    //   //
-    //   //make attendee to attend different classes per day
-    //   //
-    //   res.json({
-    //     allertMessage: `you have taken your attendance at ${results.checkInTime}`,
-    //     attendees:attendees[0]
-    //   });
-    // }
-    
-    
+}
+else{
+  res.json({
+    error:"You are not registered to this Register Name"
+  })
+}
 });
 
 
-// const p=await selectByUsernameAndPasswordFromUser("pudding",1234)
- console.log(await selectuserTypeFromUserByUserName("sam"))
+
+
 
 
 

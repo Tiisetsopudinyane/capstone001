@@ -41,9 +41,9 @@ POST http://localhost:3011/api/submitRegister/
 content-type: application/json
 
 {
-  "registerName" : "dog pack",
-  "selectedAttendees" : ["lola","yousha","snowwy","snoops"],
-  "storedUsername" : "sabeehah"
+  "registerName" : "Setswana",
+  "selectedAttendees" : ["xolani","lerato","sam","pudding"],
+  "storedUsername" : "sam"
 }
 
 ###  Get registers 
@@ -52,7 +52,7 @@ POST http://localhost:3011/api/getRegisters/
 content-type: application/json
 
 {
-  "storedUsername" : "sabeehah"
+  "storedUsername" : "sam"
 }
 
 ### Delete register
@@ -70,7 +70,7 @@ POST http://localhost:3011/api/viewRegister/
 content-type: application/json
 
 {
-  "registerId" : "4"
+  "registerId" : 9
 }
 
 ### View specific attendance
@@ -79,8 +79,8 @@ POST http://localhost:3011/api/viewSpecificRegister/
 content-type: application/json
 
 {
-  "registerId" : "4",
-  "attendeeName" : "sarah_w"
+  "registerId" : "9",
+  "username" : "sam1"
 }
 
 ### View attendance
@@ -89,7 +89,8 @@ POST http://localhost:3011/api/viewRegisterName/
 content-type: application/json
 
 {
-  "registerId" : 3
+  "registerId" : 9,
+  "username":"sam"
 }
 
 
@@ -100,8 +101,8 @@ content-type: application/json
 
 {
   "selectedRegisterName": "Maths",
-  "username": "lerato",
-  "checkInDate":"2023/10/02"
+  "username": "sam1",
+  "checkInDate":"2023/10/04"
 }
 
 ###
@@ -110,4 +111,12 @@ content-type: application/json
 
 {
   "username":"xolani"
+}
+
+###encrypt
+POST http://localhost:3011/api/addUser/
+content-type:application/json
+
+{
+  "password":"malvapudding"
 }

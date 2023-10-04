@@ -56,5 +56,6 @@ SELECT registerId,attendanceId,firstname,surname,email,phoneNumber,checkInTime,c
 
 select * from register where attendee="lerato" and registerName="Maths";
 
+select registerId,username,userType,attendee from user join register on user.username=register.attendee where registerId=4;
 
 
