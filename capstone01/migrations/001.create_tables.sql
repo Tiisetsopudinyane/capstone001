@@ -10,14 +10,13 @@ CREATE TABLE if not exists user (
     userType TEXT NOT NULL CHECK (userType IN ('admin', 'attendee'))
 );
 
+
 -- Create the attendee table linked to the user table
 CREATE TABLE if not exists attendee (
     attendeeId INTEGER PRIMARY KEY AUTOINCREMENT,
-    registerId INTEGER NOT NULL,
     userId INTEGER NOT NULL UNIQUE,
     username TEXT NOT NULL UNIQUE,
     FOREIGN KEY (userId) REFERENCES user (id)
-    FOREIGN KEY (registerId) REFERENCES register (registerId)
 );
 
 -- Create the register table
@@ -63,6 +62,6 @@ CREATE TABLE if not exists attendance(
 <<<<<<< HEAD
 -- drop table register
 =======
--- drop table user
+-- drop table attendee
 >>>>>>> 86144682cadc9aa32bee76968316a07bd5f0255c
 

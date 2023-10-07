@@ -4,13 +4,13 @@ POST http://localhost:3011/api/addUser/
 content-type: application/json
 
 {
-  "firstName" : "sabeeha",
-  "surname" : "wasaber",
-  "email" : "sabzee@gmail.com",
-  "username" : "sabeehah",
-  "password" : "sabeehah",
-  "userType" : "attendee",
-  "phoneNumber" : "0213445"
+  "firstName" : "Samuel",
+  "surname" : "Pudinyane",
+  "email" : "sam@gmail.com",
+  "username" : "sam",
+  "password" : "1234",
+  "userType" : "admin",
+  "phoneNumber" : "027363445"
 }
 
 ###
@@ -41,8 +41,8 @@ POST http://localhost:3011/api/submitRegister/
 content-type: application/json
 
 {
-  "registerName" : "Setswana",
-  "selectedAttendees" : ["xolani","lerato","sam","pudding"],
+  "registerName" : "English",
+  "selectedAttendees" : ["sabeehah","sabelo"],
   "storedUsername" : "sam"
 }
 
@@ -56,22 +56,22 @@ content-type: application/json
 }
 
 ### Delete register
-
+//it works fine no changes needed
 POST http://localhost:3011/api/deleteRegister/
 content-type: application/json
 
 {
   "registerId" : "1",
-  "username":"sam1"
+  "username":"sam"
 }
 
 ### View attendance
-
+//modify view register end point
 POST http://localhost:3011/api/viewRegister/
 content-type: application/json
 
 {
-  "registerId" : 9
+  "registerId" : 1
 }
 
 ### View specific attendance
@@ -80,17 +80,18 @@ POST http://localhost:3011/api/viewSpecificRegister/
 content-type: application/json
 
 {
-  "registerId" : "9",
-  "username" : "sam1"
+  "registerId":"1",
+  "username" : "sabelo",
+  "registerName":"Sesotho"
 }
 
 ### View attendance
-
+//this method works fine no changes needed
 POST http://localhost:3011/api/viewRegisterName/
 content-type: application/json
 
 {
-  "registerId" : 9,
+  "registerId" : 2,
   "username":"sam"
 }
 
@@ -99,19 +100,20 @@ content-type: application/json
 
 POST http://localhost:3011/api/addAttendance/
 content-type: application/json
+//this method works no changes needed
 
 {
-  "selectedRegisterName": "Maths",
-  "username": "sam1",
-  "checkInDate":"2023/10/04"
+  "selectedRegisterName": "Sesotho",
+  "username": "sabeehah",
+  "checkInDate":"2023/10/05"
 }
 
 ###
 POST http://localhost:3011/api/registerNames/
 content-type: application/json
-
+//no changes needed
 {
-  "username":"xolani"
+  "username":"sabelo"
 }
 
 ###encrypt
@@ -120,4 +122,12 @@ content-type:application/json
 
 {
   "password":"malvapudding"
+}
+
+###
+POST http://localhost:3011/api/suggest
+Content-Type: 
+
+{
+  "query":["xol"]
 }

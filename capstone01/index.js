@@ -17,6 +17,7 @@ import {
   selectByUsernameFromUser,
   selectByUsePasswordFromUser,
   selectAtendees,
+  selectAllUsersFromsUser,
   selectAllByRegisterNameFromRegister,
   selectIdByUserNameFromAttendee,
   selectMaximumRegistrationId,
@@ -31,6 +32,7 @@ import {
   selectRegisterNamesByUsernameFromRegister,
   selectByAttendanceIdFromRegister,
   selectuserTypeFromUser,
+  suggestionsData,
   selectAllFromUserAndAttendanceById,
   selectDateFromAttendee,
 } from "./sql.queries.js";
@@ -237,14 +239,14 @@ app.post("/api/deleteRegister/", async (req, res) => {
   const username=req.body.username;
   
   const register = await selectByRegisterIdFromRegister(registerId);
-  const userInfor=await selectAllFromUserAndAttendanceById(registerId,username)
-
-  if (register) {
-   if(userInfor){
+  const user=await selectAllUsersFromsUser(username);
+  console.log(register)
+  console.log(user.userType)
+  if (register.length>0) {
     ///
     ///if is Admin delete the register or else trigger error message to Attendee
     ///
-    if(userInfor.userType==="admin"){
+    if(user.userType==="admin"){
       await deleteByRegisterIdFromRegister(registerId);
     res.json({
       success: true,
@@ -257,7 +259,7 @@ app.post("/api/deleteRegister/", async (req, res) => {
    }
    
   }
-  } 
+  
   else {
     res.json({
       error: "Register does not exist!",
@@ -269,31 +271,18 @@ app.post("/api/deleteRegister/", async (req, res) => {
 //View entire register
 app.post("/api/viewRegister/", async (req, res) => {
   const registerId = req.body.registerId;
-
-  console.log(registerId)
   let registerName = "";
   const register = await selectByRegisterFromRegister(registerId);
-  console.log(register)
-  const attendance = [];
-  let attendeeId = "";
-  for (let i = 0; i < register.length; i++) {
-    registerName = register[i].registerName;
-    attendeeId = register[i].attendanceId;
-    let result = await selectByattendeeIdFromUser(attendeeId);
-    //continue if registered on register but not attended else collect the data of attendees
-    if (result[0] === undefined) {
-      continue;
-    } else {
-      attendance.push(result[0]);
-    }
-  }
+  registerName = register[0].registerName;
+
+  const result = await selectByattendeeIdFromUser(registerName);
   
-  if (attendance.length > 0) {
+  if (result.length > 0) {
     res.json({
       success: true,
       registerName: registerName,
       register:register,
-      attendance: attendance,
+      attendance: result,
     });
   } else {
     res.json({
@@ -306,7 +295,10 @@ app.post("/api/viewRegister/", async (req, res) => {
 //Get specifc register
 app.post("/api/viewSpecificRegister/", async (req, res) => {
   const username = req.body.username;
-  const attendance = await selectByattendeeNameFromUser(username);
+  const registerId=req.body.registerId;
+  const registerName=req.body.registerName
+  const attendance = await selectByattendeeNameFromUser(username,registerId,registerName);
+  console.log(username+" "+registerId+" "+registerName)
   if (attendance.length > 0) {
     res.json({
       success: true,
@@ -458,9 +450,17 @@ else{
 }
 });
 
-
-console.log(await selectByRegisterIdFromRegister(9))
-
-
-
+app.post('/api/suggest',async (req, res) => {
+  const query = req.body.query;
+  const suggestionQuery=await suggestionsData();
+  const suggestions = suggestionQuery.filter((suggestion) => {
+    if (typeof suggestion === 'string') {
+      return suggestion.startsWith(query);
+    }
+    return false; // Exclude non-string values from the suggestions
+  });
+  if(suggestions){
+    res.json({ suggestions })
+  };
+});
 

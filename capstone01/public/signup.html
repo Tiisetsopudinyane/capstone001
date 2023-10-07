@@ -18,11 +18,6 @@
   <body class="signup" x-data="Attendance">
     <div class="aside">
       
-      <div class="wrapper canvas">
-       <div class="inner"></div>
-        <p>Press and hold a scan button for 3 seconds</p>
-        <button type="submit" class="btn" @click="">Scan</button>
-      </div>
       <div class="wrapper">
         <form action="">
           <h2>Sign-up</h2>
@@ -55,6 +50,7 @@
               x-model="phoneNumber" 
               type="tel" 
               placeholder="Phone Number"
+              @input="isValidPhoneNumber"
               required
             />
           </div>
@@ -64,6 +60,7 @@
               x-model="username"
               type="text"
               placeholder="Username"
+              @input="isValidUsername"
               required
             />
           </div>
@@ -81,6 +78,7 @@
               type="password"
               placeholder="Password"
               required
+              @input="isValidPassword"
             />
           </div>
           <div class="input-box">

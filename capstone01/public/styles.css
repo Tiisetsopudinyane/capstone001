@@ -278,7 +278,7 @@ select#userType option:hover {
     align-items: flex-end;
     min-height: 100vh;
     background: url('./images/logo.png') no-repeat center top / 40vh auto, 
-                linear-gradient(to bottom, black 58%, rgb(0, 153, 254) 100%);
+                linear-gradient(to bottom, black 30%, rgb(0, 153, 254) 100%);
     font-size: 3vh;
     color: rgb(0, 153, 254);
 }
@@ -288,6 +288,16 @@ select#userType option:hover {
 .img{
     text-align: center;
 }
+.registrationScanner{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 100vh;
+    background: url('./images/logo.png') no-repeat center top / 40vh auto, 
+                linear-gradient(to bottom, black 30%, rgb(0, 153, 254) 100%);
+    font-size: 3vh;
+    color: rgb(0, 153, 254);
+}
 
 /*manualScanner*/
 .manualAttendance{
@@ -296,7 +306,7 @@ select#userType option:hover {
     align-items: flex-end;
     min-height: 100vh;
     background: url('./images/logo.png') no-repeat center top / 40vh auto, 
-                linear-gradient(to bottom, black 58%, rgb(0, 153, 254) 100%);
+                linear-gradient(to bottom, black 30%, rgb(0, 153, 254) 100%);
     font-size: 3vh;
     color: rgb(0, 153, 254);
 }
@@ -309,7 +319,7 @@ select#userType option:hover {
     align-items: flex-end;
     min-height: 100vh;
     background: url('./images/logo.png') no-repeat center top / 64vh auto, 
-                linear-gradient(to bottom, black 58%, rgb(0, 153, 254) 100%);
+                linear-gradient(to bottom, black 55%, rgb(0, 153, 254) 100%);
     font-size: 3vh;
     color: rgb(0, 153, 254);
 }
@@ -536,7 +546,19 @@ select#userType option:hover {
     text-align: center;
     margin-bottom: 0px;
 }
-
+.createRegister .attendanceBtn {
+    width: auto;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px double rgb(0, 153, 254);
+    border-radius: 40px;
+    color: rgb(0, 153, 254);
+    font-size: 3vh;
+    transition: box-shadow 0.3s ease;
+    margin: 1em 0;
+    left: 0;
+    
+}
 .attendanceWrapper .attendanceBtn {
     width: 30%;
     height: auto;
@@ -546,9 +568,8 @@ select#userType option:hover {
     color: rgb(0, 153, 254);
     font-size: 3vh;
     transition: box-shadow 0.3s ease;
-    margin-top: 1%;
-    margin-left: 1px;
-    margin-right: 1px;
+    margin: 1em;
+    
 }
 
 .attendanceWrapper .attendanceBtn:hover {

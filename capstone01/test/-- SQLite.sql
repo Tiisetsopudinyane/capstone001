@@ -52,10 +52,7 @@
 
 -- delete from attendance;
 
-SELECT registerId,attendanceId,firstname,surname,email,phoneNumber,checkInTime,checkInDate FROM user join attendance on attendance.userId=user.id WHERE registerId =4 ORDER BY attendanceId DESC;
-
-select * from register where attendee="lerato" and registerName="Maths";
-
-select registerId,username,userType,attendee from user join register on user.username=register.attendee where registerId=4;
+SELECT registerId,attendanceId,firstname,surname,email,phoneNumber,checkInTime,checkInDate FROM user join attendance on attendance.userId=user.id WHERE registerName = ? ORDER BY attendanceId DESC;
 
 
+SELECT registerId,firstname,surname,email,username,phoneNumber,registerName,checkInTime,checkInDate FROM user join attendance on attendance.userId=user.id WHERE username ="sabelo"  and registerId="1" and registerName="Sesotho" ORDER BY attendanceId DESC;

@@ -17,8 +17,14 @@
   </head>
   <body class="createRegister" x-data="Attendance">
     <div class="wrapper">
+      <div class="attendanceBtns">
       <h6 x-text="`Welcome! ${displayName}`"><h6>
+        <button class="attendanceBtn" @click="viewEntireRegister()">
+          <-- Go Back to Registers
+        </button>
+      </div>
       <form action="">
+        
         <h2>Create Register</h2>
         <div class="input-box">
           <i class="bx bx-user"></i>

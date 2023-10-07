@@ -19,6 +19,9 @@
     <div class="attendanceWrapper">
       <h6 x-text="`Welcome! ${displayName}`"><h6>
       <div class="attendanceBtns">
+        <button class="attendanceBtn" @click="viewEntireRegister()">
+          <-- Go Back to Registers
+        </button>
         <button class="attendanceBtn" @click="automatedAttendance">
           Automated Attendance
         </button>
@@ -39,6 +42,7 @@
         <button class="attendanceBtn" @click="manualAttendance()">
           Manual Attendance
         </button>
+        
       </div>
 
       <div x-show="showAutomatedAttendance" class="attendanceDiv" @click="automatedAttendance()">
@@ -50,9 +54,10 @@
         <form>
           <input
             type="text"
-            placeholder="Enter user surname"
+            placeholder="Enter username"
             x-model="searchUser"
             required
+            @input="getSuggestions"
           />
           <button
             type="button"
@@ -61,6 +66,13 @@
           >
             Search
           </button>
+          <br>
+          <div>
+            <ul x-show="suggestions.length">
+              <li x-for="suggestion in suggestions" @click="selectSuggestion(suggestion)" x-text="suggestion"></li>
+            </ul>
+          </div>
+          
         </form>
       </div>
 
@@ -69,59 +81,70 @@
       <h2 x-text="attendanceName"></h2>
       <div x-show="showFullAttendance" class="registerList-box">
         <table border="1">
-          <thead>
+          <thead>              <!-- Create table headings based on the keys of the first attendance object -->
+
             <tr>
-              <!-- Create table headings based on the keys of the first attendance object -->
-              <template
-                x-for="(key, index) in Object.keys(attendanceList[0])"
-                :key="index"
-              >
-                <th x-text="key"></th>
-              </template>
+              <th>First Name</th>
+              <th>Surname</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Register Name</th>
+              <th>Check In Time</th>
+              <th>Check In Date</th>
             </tr>
           </thead>
           <tbody>
             <!-- Iterate through attendance objects and create table rows -->
-            <template
-              x-for="(attendance, index) in attendanceList"
-              :key="index"
-            >
-              <tr>
+           
                 <!-- Iterate through the properties of each attendance object and populate table cells -->
-                <template x-for="(value, key) in attendance" :key="key">
-                  <td x-text="value"></td>
+                <template x-for="attendance in attendanceList">
+                  <tr>
+                  <td x-text="attendance.firstName"></td>
+                  <td x-text="attendance.surname"></td>
+                  <td x-text="attendance.email"></td>
+                  <td x-text="attendance.phoneNumber"></td>
+                  <td x-text="attendance.registerName"></td>
+                  <td x-text="attendance.checkInTime"></td>
+                  <td x-text="attendance.checkInDate"></td>
+                </tr>
                 </template>
-              </tr>
-            </template>
+              
+          
           </tbody>
         </table>
       </div>
 
       <div x-show="!showFullAttendance" class="registerList-box">
         <table border="1">
-          <thead>
+          <thead>              <!-- Create table headings based on the keys of the first attendance object -->
+
             <tr>
-              <!-- Create table headings based on the keys of the first attendance object -->
-              <template
-                x-for="(key, index) in Object.keys(specificAttendanceList[0])"
-                :key="index"
-              >
-                <th x-text="key"></th>
-              </template>
+              <th>First Name</th>
+              <th>Surname</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Register Name</th>
+              <th>Check In Time</th>
+              <th>Check In Date</th>
             </tr>
           </thead>
           <tbody>
             <!-- Iterate through attendance objects and create table rows -->
-            <template
-              x-for="(attendance, index) in specificAttendanceList"
-              :key="index"
-            >
-              <tr>
+            
+              
                 <!-- Iterate through the properties of each attendance object and populate table cells -->
-                <template x-for="(value, key) in attendance" :key="key">
-                  <td x-text="value"></td>
-                </template>
-              </tr>
+                <template x-for="attendancel in specificAttendanceList">
+                  <tr>
+                    <td x-text="attendancel.firstName"></td>
+                    <td x-text="attendancel.surname"></td>
+                    <td x-text="attendancel.email"></td>
+                    <td x-text="attendancel.phoneNumber"></td>
+                    <td x-text="attendancel.registerName"></td>
+                    <td x-text="attendancel.checkInTime"></td>
+                    <td x-text="attendancel.checkInDate"></td>
+                  </tr>
+                  </template>
+              
             </template>
           </tbody>
         </table>
