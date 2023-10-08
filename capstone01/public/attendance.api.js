@@ -33,7 +33,7 @@ document.addEventListener('alpine:init', () => {
 			displayName:localStorage.getItem('username'),
 
 			init(){
-				this.id=localStorage.getItem('id')
+				      this.id=localStorage.getItem('id')
 				// Get Attendance
 				axios.get("/api/getAttendees/").then((result) => {
 					if (result.data.success) {
@@ -81,14 +81,12 @@ document.addEventListener('alpine:init', () => {
 				}).then((result)=>{
 					if(result.data.success){
 					const type=result.data.list
-					if(type.userType=="admin"){
-						this.attendanceName =`Attendance for ${result.data.registerName}`;
+					
+						
+					this.attendanceName =result.data.registerName;
+					
 					}
-					else{
-						this.attendanceName="Attendance"
-					}
-
-					}
+					
 				});
                 
 			},
@@ -232,30 +230,7 @@ document.addEventListener('alpine:init', () => {
 			submitRegister(event){
 				event.preventDefault();
 				const storedUsername = localStorage.getItem("username");
-				axios.post("/api/submitRegister/", {
-					selectedAttendees : this.selectedAttendees,
-					registerName : this.registerName,
-					storedUsername : storedUsername
-				}).then((result)=>{
-						if(result.data.success){
-							this.selectedAttendees=[];
-							this.registerName=''; 
-							alert("Register has been created, successfully!")
-							window.location.href = './registerLists.html';  	 
-						}else if(result.data.error){
-							if(result.data.message==="attendee"){
-								this.registerName='';
-								alert(result.data.error);
-								window.location.href = './registerLists.html';
-							}
-							else{
-								this.registerName='';
-								alert(result.data.error);
-							}
-						}
-						this.registerName=''
-						this.selectedAttendees=[]
-				})
+				this.registerSubimt();
 			},
 
 			deleteRegister(registerId){
@@ -270,30 +245,61 @@ document.addEventListener('alpine:init', () => {
 					}
 				})
 			},
-
+registerSubimt(){
+	axios.post("/api/submitRegister/", {
+		selectedAttendees : this.selectedAttendees,
+		registerName : this.registerName,
+		storedUsername : storedUsername
+	}).then((result)=>{
+			if(result.data.success){
+				this.selectedAttendees=[];
+				this.registerName=''; 
+				alert("Register has been created, successfully!")
+				window.location.href = './registerLists.html';  	 
+			}else if(result.data.error){
+				if(result.data.message==="attendee"){
+					this.registerName='';
+					alert(result.data.error);
+					window.location.href = './registerLists.html';
+				}
+				else{
+					this.registerName='';
+					alert(result.data.error);
+				}
+			}
+			this.registerName=''
+			this.selectedAttendees=[]
+	})
+},
 			viewRegister(registerId) {
 				localStorage.setItem('id',registerId)
+				this.registerView();
 				
-				axios.post("/api/viewRegister/", {
-				  registerId: this.id,
-				}).then((result) => {
-				  if (result.data.success) {
-			        
-					// Save attendanceList to localStorage
-					localStorage.setItem('attendanceList', JSON.stringify(result.data.attendance));
-					this.attendanceList=localStorage.getItem('attendanceList');
-				    localStorage.setItem('registerName',result.data.registerName)
-				    this.attendanceName=localStorage.getItem('registerName')
-					window.location.href = './attendanceList.html';
-					
-				  } else {
-					alert(result.data.error);
-				  }
-				}).catch((error) => {
-				  console.error("Error:", error);
-				});
 			},
-			
+			registerView(){
+				axios.post("/api/viewRegister/", {
+					registerId: this.id,
+				  }).then((result) => {
+					if (result.data.success) {
+					  this.id=0;
+
+					  // Save attendanceList to localStorage
+					  localStorage.setItem('attendanceList', JSON.stringify(result.data.attendance));
+					  this.attendanceList=localStorage.getItem('attendanceList');
+					  localStorage.setItem('registerName',result.data.registerName)
+					  const list=localStorage.getItem('attendanceList')
+					  this.id=list.registerId
+					  this.attendanceName=localStorage.getItem('registerName')
+					  window.location.href = './attendanceList.html';
+					  
+					} else {
+					  alert(result.data.error);
+					}
+				  }).catch((error) => {
+					console.error("Error:", error);
+				  });
+				  
+			},
 			//Attendance List button functionality
 			showFullAttendance: true,
 			showAutomatedAttendance: false,
@@ -329,7 +335,8 @@ document.addEventListener('alpine:init', () => {
 				this.showSearch = false;
 			},
 			viewAttendanceList(){
-				this.registerName
+				this.registerName;
+				this.id=0;
                 window.location.href="./attendanceList.html";
 			},
 
@@ -364,8 +371,7 @@ document.addEventListener('alpine:init', () => {
 						console.error("No attendance found or error occurred.");
 
 					}
-					    console.log(this.id)
-						console.log(this.attendanceName)
+					    
 				});
 			},
 
@@ -393,6 +399,7 @@ document.addEventListener('alpine:init', () => {
 						this.manualAttendanceUsername='';
 						this.attendanceList=localStorage.getItem('attendees')
 						this.getRegisterNames(storedUsername);
+						this.registerView();
 						window.location.href = './attendanceList.html';
 					  }
 					  else{
@@ -400,6 +407,7 @@ document.addEventListener('alpine:init', () => {
 						  this.attendanceList=localStorage.getItem('attendees')
 						  this.manualAttendanceUsername=""
 						  this.getRegisterNames(storedUsername);
+						  this.registerView();
 						  window.location.href = './attendanceList.html';
 					  }
 					  

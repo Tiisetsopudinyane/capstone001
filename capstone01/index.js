@@ -273,8 +273,11 @@ app.post("/api/viewRegister/", async (req, res) => {
   const registerId = req.body.registerId;
   let registerName = "";
   const register = await selectByRegisterFromRegister(registerId);
+  
+ if(register[0].registerName!=undefined){
+  console.log(register[0].registerName)
   registerName = register[0].registerName;
-
+ }
   const result = await selectByattendeeIdFromUser(registerName);
   
   if (result.length > 0) {
